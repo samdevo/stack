@@ -27,5 +27,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samdevo/stack.git"
   }
 }
