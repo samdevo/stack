@@ -11,8 +11,8 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post("/register", (req, res) => {
-	console.log("registering...")
+router.post("/createevent", (req, res) => {
+	console.log("creating event...")
   // Form validation
 const { errors, isValid } = validateRegisterInput(req.body);
 // Check validation
@@ -68,7 +68,8 @@ const email = req.body.email;
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          email: user.email
         };
 // Sign token
         jwt.sign(

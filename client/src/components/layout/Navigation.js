@@ -12,6 +12,7 @@ class Navigation extends React.Component {
     this.props.logoutUser();
   };
   render(){
+    
     let links1;
     let links2
       if(this.props.auth.isAuthenticated){

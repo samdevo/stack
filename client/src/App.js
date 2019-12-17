@@ -2,6 +2,8 @@ import React from 'react';
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Navigation from './components/layout/Navigation'
+import Landing from './components/layout/Landing.js'
+import Dashboard from './components/layout/Dashboard.js'
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -51,7 +53,8 @@ class App extends React.Component {
          <Router>
         <div className="App">
           <Navigation />
-          <Route path="/" component={() => "home"} />
+          <Route exact path="/" component={Landing} />
+          <Route path='/dashboard' component={Dashboard}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
         </div>

@@ -18,6 +18,24 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
+
+export const createEvent = eventData => dispatch => {
+  console.log("creating event...")
+  axios
+    .post("http://localhost:5000/api/events/create", eventData)
+    .then(res => {
+      console.log(res)
+      return res
+    }) // re-direct to login on successful register
+    .catch(err =>{
+      console.log(err.response.data)
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    }
+    );
+}
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
@@ -33,12 +51,15 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+
     })
-    .catch(err =>
+    .catch(err => {
+      console.log(err)
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
+    }
     );
 };
 // Set logged in user
@@ -62,5 +83,6 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
-  
+
+
 };
