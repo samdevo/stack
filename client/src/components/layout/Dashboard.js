@@ -11,6 +11,7 @@ import { createEvent, getEvents } from "../../actions/eventActions";
 class Dashboard extends React.Component {
 	constructor() {
 	    super();
+	    //set new event input to empty (to keep track of form)
 	    this.state = {
 	      name: "",
 	      activity: "",
@@ -18,10 +19,11 @@ class Dashboard extends React.Component {
 	    };
 	  }
 	  componentDidMount() {
-	    // If logged in and user navigates to Register page, should redirect them to dashboard
+	    // If not logged in, send user to landing page
 	    if (!this.props.auth.isAuthenticated) {
 	      this.props.history.push("/");
 	    }
+	    //get from server and handle promise (function handled in eventActions.js)
 	    this.props.getEvents().then( res => {console.log(res)})
 	  }
 	  componentWillReceiveProps(nextProps) {
@@ -31,10 +33,10 @@ class Dashboard extends React.Component {
 	      });
 	    }
 	  }
-	  onChange = e => {
+	  onChange = e => { //update state on input change
 	      this.setState({ [e.target.id]: e.target.value });
 	    };
-	  onSubmit = e => {
+	  onSubmit = e => {//user wants to create new event
 	      e.preventDefault();
 	  const newEvent = {
 	        name: this.state.name,
@@ -44,6 +46,7 @@ class Dashboard extends React.Component {
 	      this.render()
 	  newEvent.createdDate = Date.now()
 	  newEvent.owner = this.props.auth.user.email
+	  //SEND REQUEST to be handled within eventActions.js
 	  this.props.createEvent(newEvent)
 	    };
 

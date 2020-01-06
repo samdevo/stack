@@ -48,6 +48,7 @@ class App extends React.Component {
 	    };
   	}
     render(){
+      //simple routing - renders different components based on URL route
       return(
         <Provider store={store}>
          <Router>

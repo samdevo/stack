@@ -1,3 +1,5 @@
+//CODE FOR THE NAVBAR
+//think this is pretty self-explanatory
 import React from 'react';
 // import logo from './logo.svg';
 import '../../App.css';
@@ -15,6 +17,7 @@ class Navigation extends React.Component {
     
     let links1;
     let links2
+    //SHOW "LOGOUT" BUTTON IF LOGGED IN, otherwise show login and signup buttons (no current user)
       if(this.props.auth.isAuthenticated){
         links2 = 
           <Button className="justify-content-end" style={{marginRight: '10px'}} onClick={this.onLogoutClick}>Logout</Button>

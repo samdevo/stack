@@ -7,6 +7,7 @@ import classnames from "classnames";
 class Login extends Component {
   constructor() {
     super();
+    //keeping track of "Login" input
     this.state = {
       email: "",
       password: "",
@@ -58,6 +59,7 @@ return (
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
+      {/*FORM STARTS HERE */}
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
