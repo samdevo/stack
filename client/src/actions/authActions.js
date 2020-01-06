@@ -19,23 +19,7 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
-export const createEvent = eventData => dispatch => {
-  console.log("creating event...")
-  axios
-    .post("http://localhost:5000/api/events/create", eventData)
-    .then(res => {
-      console.log(res)
-      return res
-    }) // re-direct to login on successful register
-    .catch(err =>{
-      console.log(err.response.data)
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    }
-    );
-}
+
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios

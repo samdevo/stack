@@ -47,6 +47,13 @@ const { errors, isValid } = validateEventInput(req.body);
     // }
   // });
 });
+router.post("/getEvents", (req, res) => {
+  Event.find({}, function(err, events){
+    res.json({events: events})
+  })
+  console.log("getting events")
+  
+})
 
 
 module.exports = router

@@ -6,7 +6,7 @@ import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { createEvent } from "../../actions/authActions";
+import { createEvent, getEvents } from "../../actions/eventActions";
 
 class Dashboard extends React.Component {
 	constructor() {
@@ -22,8 +22,9 @@ class Dashboard extends React.Component {
 	    if (!this.props.auth.isAuthenticated) {
 	      this.props.history.push("/");
 	    }
+	    this.props.getEvents().then( res => {console.log(res)})
 	  }
-	  UNSAFE_componentWillReceiveProps(nextProps) {
+	  componentWillReceiveProps(nextProps) {
 	    if (nextProps.errors) {
 	      this.setState({
 	        errors: nextProps.errors
@@ -38,13 +39,16 @@ class Dashboard extends React.Component {
 	  const newEvent = {
 	        name: this.state.name,
 	        activity: this.state.activity
+
 	      };
+	      this.render()
 	  newEvent.createdDate = Date.now()
 	  newEvent.owner = this.props.auth.user.email
 	  this.props.createEvent(newEvent)
 	    };
 
 	render() {
+		console.log(this.state)
 		const { errors } = this.state
 		console.log("errors:")
 		console.log(errors)
@@ -73,18 +77,23 @@ class Dashboard extends React.Component {
 				</ul>
 			</Col>
 		</Row>
+
 		<form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
                   value={this.state.name}
-                  error={errors.name}
+                  error={errors.eventName}
                   id="name"
                   type="text" className={classnames("", {
-                    invalid: errors.name
+                    invalid: errors.eventName
                   })}
                 />
                 <label htmlFor="name">Event Name</label>
+                <span className="red-text">
+                  {errors.eventName}
+                </span>
+
                 <span className="red-text">{errors.name}</span>
               </div>
               <div className="input-field col s12">
@@ -169,6 +178,11 @@ class Dashboard extends React.Component {
 	//     const { errors } = this.state;
 
 
+// function eventList(){
+// 	console.log("eventlist")
+// 	getEvents().then(res => {console.log(res)})
+// }
+
 
 
 Dashboard.propTypes = {
@@ -180,5 +194,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { createEvent }
+  { createEvent, getEvents }
 )(Dashboard);
