@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import "./login.css"
-class Login extends Component {
+class LoginPopup extends Component {
   constructor() {
     super();
     //keeping track of "Login" input
@@ -46,9 +46,7 @@ render() {
     const { errors } = this.state;
     document.body.style.display = "Block"
 return (
-  <div>
-  <div id="main">
-    <p id="login" align="center">Welcome Back!</p>
+  <div id="main" className="popup">
     <form id="login" onSubmit={this.onSubmit}>
       <input 
                   onChange={this.onChange}
@@ -62,7 +60,6 @@ return (
       <button type="submit" id="submit" style={{paddingRight: "50px"}} align="center">Connect</button>
       <p id="forgot" align="center"><a href="#">I forgot my password</a></p>  
       </form>   
-      </div>  
           
     
 {/*
@@ -75,7 +72,7 @@ return (
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b>Login to Senior Connect</b> below
+                <b>Login</b> below
               </h4>
               <p className="grey-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
@@ -139,7 +136,7 @@ return (
     );
   }
 }
-Login.propTypes = {
+LoginPopup.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -151,4 +148,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { loginUser }
-)(Login);
+)(LoginPopup);

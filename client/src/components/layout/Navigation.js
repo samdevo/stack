@@ -7,8 +7,17 @@ import {Navbar, Form, Button, FormControl, Nav} from 'react-bootstrap'
 import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import LoginPopup from "../auth/LoginPopup.js"
 class Navigation extends React.Component {
+  constructor(){
+    super()
+    this.state = {showPopup: false}
+  }
+  // togglePopup() {  
+  //   this.setState({  
+  //        showPopup: !this.state.showPopup  
+  //   });  
+  // }  
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -28,7 +37,7 @@ class Navigation extends React.Component {
       }
       else{
         links1 = 
-          <Button className="justify-content-end"style={{marginRight: '10px'}} href="/login">Login</Button>
+          <Button className="justify-content-end"style={{marginRight: '10px'}} href={"/loginInPage"}>Login</Button>
           
         links2 = 
           <Button className="justify-content-end"style={{marginRight: '10px'}} href="/register">Signup</Button>
@@ -51,14 +60,16 @@ class Navigation extends React.Component {
         // //   </li>
         //  </ul>
        // </nav>
-   
+   <div>
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
   <Navbar.Brand href="/">SeniorEvents</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
     {links1}{links2}
   </Navbar.Collapse>
+
 </Navbar>
+   </div>
   );
   }
 }
