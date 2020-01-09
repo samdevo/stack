@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from './components/auth/Login'
+import LoginPopup from './components/auth/LoginPopup'
 import Register from './components/auth/Register'
 import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing.js'
@@ -55,6 +56,12 @@ class App extends React.Component {
         <div className="App">
           <Navigation />
           <Route exact path="/" component={Landing} />
+          <Route exact path="/loginInPage" render={() => 
+            <div>
+            <GreyScreen/>
+            <LoginPopup/>
+            </div>
+          }/>
           <Route path='/dashboard' component={Dashboard}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
@@ -63,5 +70,13 @@ class App extends React.Component {
       </Provider>
       )
     }
+}
+
+
+
+function GreyScreen(){
+  return(<div style={{position: "fixed", /* above everything else */
+            top:0, left:0, bottom:0, right:0,
+            background:"rgba(0,0,0,.5)"}} zindex={100}></div>)
 }
 export default App;
