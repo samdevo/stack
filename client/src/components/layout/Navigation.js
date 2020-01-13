@@ -37,7 +37,7 @@ class Navigation extends React.Component {
       }
       else{
         links1 = 
-          <Button className="justify-content-end"style={{marginRight: '10px'}} href={"/loginInPage"}>Login</Button>
+          <Button className="justify-content-end"style={{marginRight: '10px'}} href={"/login"}>Login</Button>
           
         links2 = 
           <Button className="justify-content-end"style={{marginRight: '10px'}} href="/register">Signup</Button>

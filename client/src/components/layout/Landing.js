@@ -6,6 +6,7 @@ import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames"
+import {getEvents} from "../../actions/eventActions"
 
 class Landing extends React.Component {
 	constructor() {
@@ -17,13 +18,19 @@ class Landing extends React.Component {
 	      password2: "",
 	      errors: {}
 	    };
+	    this.events = []
 	  }
-	  // componentDidMount() {
-	  //   // If logged in and user navigates to Register page, should redirect them to dashboard
-	  //   if (this.props.auth.isAuthenticated) {
-	  //     this.props.history.push("/dashboard");
-	  //   }
-	  // }
+	  componentDidMount() {
+	    // If logged in and user navigates to Register page, should redirect them to dashboard
+	    // if (this.props.auth.isAuthenticated) {
+	    //   this.props.history.push("/dashboard");
+	    // }
+	    this.props.getEvents().then((events) => {
+	    	console.log(events)
+	    	this.events = events
+	    })
+
+	  }
 	  
 
 	render() {
@@ -91,6 +98,7 @@ class Landing extends React.Component {
 				</ul>
 			</Col>
 		</Row>
+
 			</Container>
 			)
 	}
@@ -154,5 +162,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getEvents }
 )(Landing);

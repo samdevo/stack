@@ -24,6 +24,7 @@ export const createEvent = eventData => dispatch => {
     }
     );
 }
+// export default createEvent
 
 // export const getEvents = reqData => dispatch => {
 // 	console.log("getting events...")
