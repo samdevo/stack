@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
 	      };
 	      this.render()
 	  newEvent.createdDate = Date.now()
-	  newEvent.owner = this.props.auth.user.email
+	  newEvent.owner = this.props.auth.user.id
 	  //SEND REQUEST to be handled within eventActions.js
 	  this.props.createEvent(newEvent)
 	    };
@@ -55,6 +55,7 @@ class Dashboard extends React.Component {
 		const { errors } = this.state
 		console.log("errors:")
 		console.log(errors)
+		console.log(this.props.auth)
 		return(
 			<Container>
 			  

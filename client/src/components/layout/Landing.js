@@ -19,6 +19,7 @@ class Landing extends React.Component {
 	      errors: {}
 	    };
 	    this.events = []
+	    this.eventListing = []
 	  }
 	  componentDidMount() {
 	    // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -28,6 +29,7 @@ class Landing extends React.Component {
 	    this.props.getEvents().then((events) => {
 	    	console.log(events)
 	    	this.events = events
+	    	
 	    })
 
 	  }
