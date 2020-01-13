@@ -38,10 +38,10 @@ class Navigation extends React.Component {
       else{
         links1 = 
           <Button className="justify-content-end"style={{marginRight: '10px'}} href={"/login"}>Login</Button>
-          
-        links2 = 
-          <Button className="justify-content-end"style={{marginRight: '10px'}} href="/register">Signup</Button>
         
+          <Button className="btn-primary" href={"/loginInPage"}>Login</Button>
+        links2 = 
+          <Button className="btn-primary" href="/register">Sign Up</Button>
 
       }
       console.log(this.props.auth.user.name)
