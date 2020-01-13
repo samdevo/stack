@@ -13,13 +13,16 @@ const pointSchema = new mongoose.Schema({
   name: {
     type: String
   }
+  address: {
+    type: String
+  }
 });
 
 const EventSchema = new Schema({
   name: String,
   owner: String,
   location: pointSchema,
-  activity: String,
+  description: String,
   eventDate: Date,
   createdDate: Date,
   attendees: [mongoose.Schema.Types.ObjectId]
