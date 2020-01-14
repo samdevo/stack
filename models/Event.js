@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 
+
 const pointSchema = new mongoose.Schema({
   type: {
     type: String,
@@ -12,11 +13,21 @@ const pointSchema = new mongoose.Schema({
   },
   name: {
     type: String
-  }
-  address: {
+  },
+  street: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  state: {
+    type: String
+  },
+  zip: {
     type: String
   }
 });
+
 
 const EventSchema = new Schema({
   name: String,
@@ -25,6 +36,12 @@ const EventSchema = new Schema({
   description: String,
   eventDate: Date,
   createdDate: Date,
+  image: {
+    url: String,
+    altText: String
+  },
   attendees: [mongoose.Schema.Types.ObjectId]
 });
+
+
 module.exports = Event = mongoose.model("events", EventSchema);
