@@ -56,12 +56,6 @@ class App extends React.Component {
         <div className="App">
           <Navigation />
           <Route exact path="/" component={Landing} />
-          <Route exact path="/loginInPage" render={() => 
-            <div>
-            <GreyScreen/>
-            <LoginPopup/>
-            </div>
-          }/>
           <Route path='/dashboard' component={Dashboard}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />

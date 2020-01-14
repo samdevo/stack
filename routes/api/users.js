@@ -46,6 +46,16 @@ User.findOne({ email: req.body.email }).then(user => {
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
+router.post("/getUserInfo", (req, res) => {
+
+  res.json({test:"This is a test"})
+
+
+
+
+
+
+})
 router.post("/login", (req, res) => {
   // Form validation
 const { errors, isValid } = validateLoginInput(req.body);
