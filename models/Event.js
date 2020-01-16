@@ -29,6 +29,7 @@ const pointSchema = new mongoose.Schema({
 });
 
 
+
 const EventSchema = new Schema({
   name: String,
   owner: mongoose.Schema.Types.ObjectId,
