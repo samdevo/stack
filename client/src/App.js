@@ -5,6 +5,7 @@ import Register from './components/auth/Register'
 import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing.js'
 import Dashboard from './components/layout/Dashboard.js'
+import EventDetail from './components/layout/EventDetail.js'
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -59,6 +60,8 @@ class App extends React.Component {
           <Route path='/dashboard' component={Dashboard}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/nearby" component={Login} />
+          <Route exact path="/detail" component={EventDetail} />
         </div>
       </Router>
       </Provider>
