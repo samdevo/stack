@@ -34,7 +34,6 @@ const events = [
 class Display extends React.Component {
 	array = (i) => {
 		const events = this.props.events;
-		//for (let i = 0; i < events.length; i++){
 		return(
 			<Card bg = "light">
 				<Card.Title>
@@ -54,7 +53,6 @@ class Display extends React.Component {
 	 			</Card.Body>
  			</Card>
 		)
-		//}
 	}
 	render() {
 		//const events = this.props.events;
