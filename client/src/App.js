@@ -59,6 +59,7 @@ class App extends React.Component {
           <Route path='/dashboard' component={Dashboard}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/nearby" component={Login} />
         </div>
       </Router>
       </Provider>

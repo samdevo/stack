@@ -11,29 +11,31 @@ import CardGroup from 'react-bootstrap/CardGroup';
 
 class EventInfo extends React.Component {
   render() {
-    const name = this.props.name;
-    const description = this.props.description;
-    const image = this.props.image;
-    const location = this.props.location;
-    const eventDate = this.props.eventDate;
+    const title = this.props.title;
+    const desc = this.props.desc;
+    const imageURL = this.props.imageURL;
+    const imageAltText = this.props.imageAltText;
+    const address = this.props.address;
+    const date = this.props.date;
+    const time = this.props.time;
 
     return (
       <Container>
         <Row> 
           <Col align="center">
-            <h1>{name}</h1>
+            <h1>{title}</h1>
           </Col>
         </Row>
         <Row>
           <Col align="center">
-            <img fluid className="image"  src={process.env.PUBLIC_URL + "/" + image.url} alt={image.altText} />
+            <img fluid className="image"  src={process.env.PUBLIC_URL + "/" + imageURL} alt={imageAltText} />
           </Col>
         </Row>
         <Row>
           <Col align="center"> 
-            <h4>{description}</h4>
-            <h4>Where: {location.street}</h4>
-            <h4>When: {eventDate} </h4>
+            <h4>{desc}</h4>
+            <h4>Where: {address}</h4>
+            <h4>When: {date} at {time}</h4>
           </Col>
         </Row>
 
@@ -74,18 +76,21 @@ class EventAttendees extends React.Component {
         <Col xs={9}>
           <CardGroup>
           <Card style={{ width: '5rem' }}> 
+            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[0].imageURL} />
             <Card.Body>
-              <Card.Title>{attendees[0]}</Card.Title>
+              <Card.Title>{attendees[0].name}</Card.Title>
             </Card.Body>
           </Card>
         <Card style={{ width: '5rem' }}>
+            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[1].imageURL} />
             <Card.Body>
-              <Card.Title>{attendees[1]}</Card.Title>
+              <Card.Title>{attendees[1].name}</Card.Title>
             </Card.Body>
           </Card>
           <Card style={{ width: '5rem' }}>
-           <Card.Body>
-              <Card.Title>{attendees[2]}</Card.Title>
+            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[2].imageURL} />
+            <Card.Body>
+              <Card.Title>{attendees[2].name}</Card.Title>
             </Card.Body>
           </Card>
           <Card style={{ width: '5rem' }}>
@@ -116,7 +121,7 @@ class EventAttendees extends React.Component {
 
 class EventMap extends React.Component {
   render() {
-    const location = this.props.location; // map should be dynamic based on this location
+    const address = this.props.address; // map should be dynamic based on this address
     
     return (
       <Container>
@@ -176,23 +181,25 @@ class EventDetail extends React.Component {
           
           <Col>
              <EventInfo 
-                name={this.props.event.name} 
-                location={this.props.event.location}
-                eventDate={this.props.event.eventDate}
-                description={this.props.event.description}
-                image={this.props.event.image}
+                title={this.props.event.title} 
+                address={this.props.event.address}
+                date={this.props.event.date}
+                time={this.props.event.time}
+                desc={this.props.event.desc}
+                imageAltText={this.props.event.imageAltText}
+                imageURL={this.props.event.imageURL}
               />
           </Col>
 
            <Col>
-              <EventMap location={this.props.event.location} />
+              <EventMap address={this.props.event.address} />
           </Col>
           
          </Row>
          <Row> 
           
           <Col>
-              <EventAttendees attendees={this.props.event.attendees} />
+              <EventAttendees attendees={this.props.attendees} />
               <br />
           </Col>
          
@@ -205,29 +212,26 @@ class EventDetail extends React.Component {
 }    
 
 const EVENT = {
-  name: 'Bowling in Brooklyn', 
-  owner: 1,
-  location: {
-    type: 'Point',
-    coordinates: [123,456],
-    name: 'Bowl-Mor',
-    street: '22 Cheever Pl',
-    city: 'Brooklyn',
-    state: 'NY',
-    zip: '10211'
-  },
-  description: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
-  eventDate: '2020/03/29T15:00:00', 
-  createdDate: '2020/02/14T11:20:00',
-  image: {
-    url: 'images/bowl3.jpg',
-    altText: 'Bowling'
-  },
-  attendees: [1,2,3,4,5]
+  id: 1,
+  title: 'Bowling in Brooklyn', 
+  address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
+  date: '1/17/2020', 
+  time: '5:00 PM',
+  desc: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
+  imageURL: 'images/bowl3.jpg',
+  imageAltText: 'Bowling',
+  attendees: [1,2,3]
 };
 
+const ATTENDEES = [
+  {id: 1, name: 'Tonya P.', imageURL: 'images/1_tonya.jpg'},
+  {id: 2, name: 'Tony W.', imageURL: 'images/2_tony.jpg'},
+  {id: 3, name: 'Tino R.', imageURL: 'images/3_tino.jpg'},
+  {id: 4, name: 'Kira W.', imageURL: 'images/2_tony.jpg'},
+  {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
+];
 
-export {EventDetail, EVENT};
+export {EventDetail, EVENT, ATTENDEES};
 
 
 
