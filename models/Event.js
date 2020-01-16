@@ -14,7 +14,6 @@ const pointSchema = new mongoose.Schema({
   name: {
     type: String
   },
-<<<<<<< HEAD
   street: {
     type: String
   },
@@ -25,9 +24,6 @@ const pointSchema = new mongoose.Schema({
     type: String
   },
   zip: {
-=======
-  address: {
->>>>>>> 89e2b3bb808b13b593afad633d967aac57891c2b
     type: String
   }
 });
