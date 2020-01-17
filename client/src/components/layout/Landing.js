@@ -31,7 +31,7 @@ class Landing extends React.Component {
 				    <Col id = "slogan"><h1>Meet</h1>
 		          <h1>Explore</h1>
 		          <h1>Discover</h1>
-		          <form action="/login">
+		          <form action="/eventlist">
 		            <label>
 		              Enter Your Zipcode: </label>  <br/>
 		              <input type="zipcode" name="name" /> <br/>
