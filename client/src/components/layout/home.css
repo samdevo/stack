@@ -19,10 +19,27 @@
 	height: 400px;
 }
 
+
 #grad {
-  background-image: linear-gradient(to bottom, rgb(95, 123, 188), rgb(92, 184, 232), rgb(193,200,227));
-  position: absolute;
+  	position: absolute;
     top: 55px; /* Header Height */
     bottom: 10px; /* Footer Height */
     width: 100%;
+}
+
+#bg-image {
+  /* The image used */
+  background-image: url("/elders.jpg");
+
+  /* Add the blur effect */
+  filter: blur(16px);
+  -webkit-filter: blur(16px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

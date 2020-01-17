@@ -23,14 +23,10 @@ class Landing extends React.Component {
   	}
 	render(){
 		return(
-
-
 			<div id = "grad">
-				
-		
+				<div id="bg-image"></div>
 				<Container>
 
-				 
 				  <Row>
 				    <Col id = "slogan"><h1>Meet</h1>
 		          <h1>Explore</h1>
