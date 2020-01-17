@@ -7,10 +7,32 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import { connect } from "react-redux";
 
+const event = {
+  id: 1,
+  title: 'Bowling in Brooklyn', 
+  address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
+  date: '1/17/2020', 
+  time: '5:00 PM',
+  desc: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
+  imageURL: 'images/bowl3.jpg',
+  imageAltText: 'Bowling',
+  attendees: [1,2,3]
+};
+
+const attendees = [
+  {id: 1, name: 'Tonya P.', imageURL: 'images/1_tonya.jpg'},
+  {id: 2, name: 'Tony W.', imageURL: 'images/2_tony.jpg'},
+  {id: 3, name: 'Tino R.', imageURL: 'images/3_tino.jpg'},
+  {id: 4, name: 'Kira W.', imageURL: 'images/2_tony.jpg'},
+  {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
+];
 
 class EventInfo extends React.Component {
+
   render() {
+    console.log(this.props)
     const title = this.props.title;
     const desc = this.props.desc;
     const imageURL = this.props.imageURL;
@@ -121,7 +143,7 @@ class EventAttendees extends React.Component {
 
 class EventMap extends React.Component {
   render() {
-    const address = this.props.address; // map should be dynamic based on this address
+    const address = event.address; // map should be dynamic based on this address
     
     return (
       <Container>
@@ -181,25 +203,25 @@ class EventDetail extends React.Component {
           
           <Col>
              <EventInfo 
-                title={this.props.event.title} 
-                address={this.props.event.address}
-                date={this.props.event.date}
-                time={this.props.event.time}
-                desc={this.props.event.desc}
-                imageAltText={this.props.event.imageAltText}
-                imageURL={this.props.event.imageURL}
+                title={event.title} 
+                address={event.address}
+                date={event.date}
+                time={event.time}
+                desc={event.desc}
+                imageAltText={event.imageAltText}
+                imageURL={event.imageURL}
               />
           </Col>
 
            <Col>
-              <EventMap address={this.props.event.address} />
+              <EventMap address={event.address} />
           </Col>
           
          </Row>
          <Row> 
           
           <Col>
-              <EventAttendees attendees={this.props.attendees} />
+              <EventAttendees attendees={attendees} />
               <br />
           </Col>
          
@@ -211,27 +233,15 @@ class EventDetail extends React.Component {
   }
 }    
 
-const EVENT = {
-  id: 1,
-  title: 'Bowling in Brooklyn', 
-  address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
-  date: '1/17/2020', 
-  time: '5:00 PM',
-  desc: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
-  imageURL: 'images/bowl3.jpg',
-  imageAltText: 'Bowling',
-  attendees: [1,2,3]
-};
 
-const ATTENDEES = [
-  {id: 1, name: 'Tonya P.', imageURL: 'images/1_tonya.jpg'},
-  {id: 2, name: 'Tony W.', imageURL: 'images/2_tony.jpg'},
-  {id: 3, name: 'Tino R.', imageURL: 'images/3_tino.jpg'},
-  {id: 4, name: 'Kira W.', imageURL: 'images/2_tony.jpg'},
-  {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
-];
 
-export {EventDetail, EVENT, ATTENDEES};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  {  }
+)(EventDetail);
 
 
 
