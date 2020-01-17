@@ -46,7 +46,6 @@ class Display extends React.Component {
 		 			<Card.Text>
 		 				{events[i][1]}
 		 			</Card.Text>
-
 		 			<Button variant = "primary" to = "/app">
 		 				More info
 	 				</Button>
