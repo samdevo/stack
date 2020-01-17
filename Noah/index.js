@@ -1,18 +1,9 @@
-import React from 'react';
-// import logo from './logo.svg';
-import '../../App.css';
-import {Container, Row, Col} from 'react-bootstrap'
-import { logoutUser } from "../../actions/authActions";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import classnames from "classnames";
-import { createEvent, getEvents } from "../../actions/eventActions";
-
-
-import ReactDOM from 'react-dom';
+//import React from 'react';
+//import ReactDOM from 'react-dom';
 //import './index.css';
 //import App from './App';
-// import * as serviceWorker from './serviceWorker';
+//import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -34,6 +25,7 @@ const events = [
 class Display extends React.Component {
 	array = (i) => {
 		const events = this.props.events;
+		//for (let i = 0; i < events.length; i++){
 		return(
 			<Card bg = "light">
 				<Card.Title>
@@ -46,12 +38,14 @@ class Display extends React.Component {
 		 			<Card.Text>
 		 				{events[i][1]}
 		 			</Card.Text>
-		 			<Button variant = "primary" to = "/app">
+
+		 			<Button variant = "primary">
 		 				More info
 	 				</Button>
 	 			</Card.Body>
  			</Card>
 		)
+		//}
 	}
 	render() {
 		//const events = this.props.events;
@@ -80,8 +74,6 @@ class Display extends React.Component {
 ReactDOM.render(
 	 	<Display events={events}/>
 	 	, document.getElementById('root'));
-
-export {Display}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
