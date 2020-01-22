@@ -12,7 +12,7 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-import {Display} from "./components/layout/EventList.js"
+// import {Display} from "./components/layout/EventList.js"
 
 
 
@@ -63,7 +63,6 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/nearby" component={Login} />
           <Route exact path="/detail" component={EventDetail} />
-          <Route exact path="/eventlist" component={Display} />
         </div>
       </Router>
       </Provider>
