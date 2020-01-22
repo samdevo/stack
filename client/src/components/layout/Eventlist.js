@@ -13,9 +13,9 @@ import ReactDOM from 'react-dom';
 //import './index.css';
 //import App from './App';
 // import * as serviceWorker from './serviceWorker';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
+
+
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Button from 'react-bootstrap/Button';
@@ -31,7 +31,7 @@ const events = [
 "Reading at a book club",
 "2:00"]]
 
-class Display extends React.Component {
+class eventlist extends React.Component {
 	array = (i) => {
 		const events = this.props.events;
 		return(
@@ -77,13 +77,17 @@ class Display extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	 	<Display events={events}/>
-	 	, document.getElementById('root'));
+// ReactDOM.render(
+// 	 	<Display events={events}/>
+// 	 	, document.getElementById('root'));
 
-export {Display}
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 //serviceWorker.unregister();
+
+export default connect(
+
+)(eventlist);
