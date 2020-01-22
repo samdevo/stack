@@ -41,7 +41,7 @@ class Landing extends React.Component {
 		            <input type="submit" value="Submit" onChange={this.handleChange}/>
 		          </form>
 					</Col>
-				    <Col><img  src={pic} id = "elderly" alt="Picture of Elderly People" /></Col>
+				    <Col><img  src={pic} id = "elderlypic" alt="Picture of Elderly People" /></Col>
 				  </Row>
 
 				</Container>
