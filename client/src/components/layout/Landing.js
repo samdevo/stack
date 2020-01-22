@@ -10,6 +10,7 @@ import classnames from "classnames"
 import {getEvents} from "../../actions/eventActions";
 import pic from './elders.jpg';
 import "./home.css";
+import "./EventList.js";
 
 
 class Landing extends React.Component {

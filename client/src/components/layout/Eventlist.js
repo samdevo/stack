@@ -7,15 +7,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
-
-
 import ReactDOM from 'react-dom';
 //import './index.css';
 //import App from './App';
 // import * as serviceWorker from './serviceWorker';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Button from 'react-bootstrap/Button';
@@ -81,7 +79,7 @@ ReactDOM.render(
 	 	<Display events={events}/>
 	 	, document.getElementById('root'));
 
-export {Display}
+export {Display};
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
