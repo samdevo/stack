@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from "react-helmet"; // head tag maker - npm install --save react-helmet
+//import Helmet from "react-helmet"; // head tag maker - npm install --save react-helmet
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -180,12 +180,7 @@ class EventDetail extends React.Component {
   render() {
     return (  
       <Container>
-        <Helmet>
-          <title>Senior Events</title>
-          <meta name="keywords" content="senior events" />
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-        </Helmet>
+    
         <style type="text/css">
         {`
           .btn-flat {
