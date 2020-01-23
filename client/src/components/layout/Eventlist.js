@@ -52,7 +52,6 @@ const attendees = [
 console.log(Event)
 class EventList extends React.Component {
 	array = (i) => {
-		//const events = this.events;
 		return(
 			<Card bg = "light">
 				<Card.Title>
@@ -73,7 +72,6 @@ class EventList extends React.Component {
 		)
 	}
 	render() {
-		//const events = this.props.events;
 		return(
 			<Container>
 				<Row>
