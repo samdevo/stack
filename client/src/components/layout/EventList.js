@@ -99,5 +99,4 @@ class EventList extends React.Component {
 //serviceWorker.unregister();
 
 export default connect()(EventList);
-)(EventList);
 
