@@ -6,6 +6,7 @@ import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing.js'
 import Dashboard from './components/layout/Dashboard.js'
 import EventDetail from './components/layout/EventDetail.js'
+import EventList from './components/layout/EventList.js'
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -63,7 +64,7 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/nearby" component={Login} />
           <Route exact path="/detail" component={EventDetail} />
-          <Route exact path="/eventlist" component={Display} />
+          <Route exact path="/EventList" component={EventList} />
         </div>
       </Router>
       </Provider>
