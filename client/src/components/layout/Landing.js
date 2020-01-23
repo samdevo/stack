@@ -13,6 +13,7 @@ import "./home.css";
 import "./EventList.js";
 
 
+
 class Landing extends React.Component {
 	constructor(props) {
 	    super(props);
@@ -32,14 +33,7 @@ class Landing extends React.Component {
 				    <Col id = "slogan"><h1>Meet</h1>
 		          <h1>Explore</h1>
 		          <h1>Discover</h1>
-		          <form action="/EventList">
-		            <label>
-		              Enter Your Zipcode: </label>  <br/>
-		              <input type="zipcode" name="name" /> <br/>
-		     
-
-		            <input type="submit" value="Submit" onChange={this.handleChange}/>
-		          </form>
+		          
 					</Col>
 				    <Col><img  src={pic} id = "elderlypic" alt="Picture of Elderly People" /></Col>
 				  </Row>
@@ -53,7 +47,15 @@ class Landing extends React.Component {
 )}
 
 }
-	// class Register extends Component {
+// <form action="/EventList">
+// 		            <label>
+// 		              Enter Your Zipcode: </label>  <br/>
+// 		              <input type="zipcode" name="name" /> <br/>
+		     
+
+// 		            <input type="submit" value="Submit" onChange={this.handleChange}/>
+// 		          </form>
+// 	// class Register extends Component {
 	//   constructor() {
 	//     super();
 	//     this.state = {
