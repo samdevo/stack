@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import '../../App.css';
 import {Container, Row, Col, Card, Button} from 'react-bootstrap'
 import { logoutUser } from "../../actions/authActions";
@@ -9,17 +8,7 @@ import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import ReactDOM from 'react-dom';
 
-// const events = [
-// ['Lunch',
-// 'Going to get lunch',
-// 'Jan. 15, 2020 at 12:00'],
-// ["Book club" ,
-// "Reading at a book club",
-// "2:00"],["Book club" ,
-// "Reading at a book club",
-// "2:00"]]
-
-const events = [
+const Events = [
   {id: 1,
   title: 'Bowling in Brooklyn', 
   address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
@@ -29,6 +18,7 @@ const events = [
   imageURL: 'images/bowl3.jpg',
   imageAltText: 'Bowling',
   attendees: [1,2,3]},
+  
   {id: 2,
   title: 'Going to a book club',
   address: '150 East 86th St, New York, NY',
@@ -37,7 +27,7 @@ const events = [
   desc: "We're going to a book club at Barnes & Noble to discuss a recent book.",
   imageURL: "./elders.jpg",
   imageAltText: "older adults",
-  atendees: [1,4,5]}
+  atendees: [1,4,5]},
 ];
 
 const attendees = [
@@ -48,24 +38,24 @@ const attendees = [
   {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
 ];
 
+//console.log(Event)
 
-console.log(Event)
 class EventList extends React.Component {
-	array = (i) => {
+	event = (i) => {
 		return(
 			<Card bg = "light">
 				<Card.Title>
-			 		{events[i].title}
+			 		{Events[i].title}
 		 		</Card.Title>
 		 		<Card.Subtitle>
-		 			{events[i].date + events[i].time}
+		 			{Events[i].date + Events[i].time}
 	 			</Card.Subtitle>
 		 		<Card.Body>
 		 			<Card.Text>
-		 				{events[i].desc}
+		 				{Events[i].desc}
 		 			</Card.Text>
-		 			<Button variant = "primary" href={'./detail/' + events[i].id}>
-		 				More info
+		 			<Button variant = "primary" href = {'./detail/' + Events[i].id}>
+		 				More Info
 	 				</Button>
 	 			</Card.Body>
  			</Card>
@@ -76,12 +66,12 @@ class EventList extends React.Component {
 			<Container>
 				<Row>
 					<Col>
-						{this.array(0)}
+						{this.event(0)}
 					</Col>
 				</Row>
 				<Row>
 					<Col>
-						{this.array(1)}
+						{this.event(1)}
 					</Col>
 				</Row>
 			</Container>
@@ -89,14 +79,8 @@ class EventList extends React.Component {
 	}
 }
 
+export default connect()(EventList);
+
 // ReactDOM.render(
 // 	 	<Display events={events}/>
 // 	 	, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-//serviceWorker.unregister();
-
-export default connect()(EventList);
-
