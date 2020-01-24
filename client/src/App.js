@@ -6,12 +6,14 @@ import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing.js'
 import Dashboard from './components/layout/Dashboard.js'
 import EventDetail from './components/layout/EventDetail.js'
+import EventList from './components/layout/EventList.js'
 
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+// import {Display} from "./components/layout/EventList.js"
 
 
 

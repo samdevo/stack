@@ -11,8 +11,8 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post("/createevent", (req, res) => {
-	console.log("creating event...")
+router.post("/register", (req, res) => {
+	console.log("creating user...")
   // Form validation
 const { errors, isValid } = validateRegisterInput(req.body);
 // Check validation

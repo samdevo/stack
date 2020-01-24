@@ -10,6 +10,8 @@ import classnames from "classnames"
 import {getEvents} from "../../actions/eventActions";
 import pic from './elders.jpg';
 import "./home.css";
+import "./EventList.js";
+
 
 
 class Landing extends React.Component {
@@ -43,51 +45,7 @@ class Landing extends React.Component {
 			</Container>
 			</div>
 			)}
-
 	}
-	// class Register extends Component {
-	//   constructor() {
-	//     super();
-	//     this.state = {
-	//       name: "",
-	//       email: "",
-	//       password: "",
-	//       password2: "",
-	//       errors: {}
-	//     };
-	//   }
-	//   componentDidMount() {
-	//     // If logged in and user navigates to Register page, should redirect them to dashboard
-	//     if (this.props.auth.isAuthenticated) {
-	//       this.props.history.push("/dashboard");
-	//     }
-	//   }
-	//   componentWillReceiveProps(nextProps) {
-	//     if (nextProps.errors) {
-	//       this.setState({
-	//         errors: nextProps.errors
-	//       });
-	//     }
-	//   }
-	//   onChange = e => {
-	//       this.setState({ [e.target.id]: e.target.value });
-	//     };
-	//   onSubmit = e => {
-	//       e.preventDefault();
-	//   const newUser = {
-	//         name: this.state.name,
-	//         email: this.state.email,
-	//         password: this.state.password,
-	//         password2: this.state.password2
-	//       };
-	//   console.log(newUser);
-	//   this.props.registerUser(newUser, this.props.history);
-	//     };
-	// render() {
-	//     const { errors } = this.state;
-
-
-
 
 	Landing.propTypes = {
 		logoutUser: PropTypes.func.isRequired,
