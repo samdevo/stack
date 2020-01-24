@@ -18,7 +18,6 @@ const Events = [
   imageURL: 'images/bowl3.jpg',
   imageAltText: 'Bowling',
   attendees: [1,2,3]},
-  
   {id: 2,
   title: 'Going to a book club',
   address: '150 East 86th St, New York, NY',
