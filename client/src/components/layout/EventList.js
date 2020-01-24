@@ -38,7 +38,7 @@ const attendees = [
   {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
 ];
 
-//console.log(Event)
+//console.log("Hello")
 
 class EventList extends React.Component {
 	event = (i) => {
