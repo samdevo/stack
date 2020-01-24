@@ -14,44 +14,37 @@ import "./home.css";
 
 class Landing extends React.Component {
 	constructor(props) {
-	    super(props);
-	    this.state = {value: ''};
-  	}
+		super(props);
+		this.state = {value: ''};
+	}
 
-  	handleChange(event) {
-    	this.setState({value: event.target.value});
-  	}
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	}
 	render(){
 		return(
 			<div id = "grad">
-				<div id="bg-image"></div>
-				<Container>
-
-				  <Row>
-				    <Col id = "slogan"><h1>Meet</h1>
-		          <h1>Explore</h1>
-		          <h1>Discover</h1>
-		          <form action="/eventlist">
-		            <label>
-		              Enter Your Zipcode: </label>  <br/>
-		              <input type="zipcode" name="name" /> <br/>
-		     
-
-		            <input type="submit" value="Submit" onChange={this.handleChange}/>
-		          </form>
-					</Col>
-				    <Col><img  src={pic} id = "elderly" alt="Picture of Elderly People" /></Col>
-				  </Row>
-
-				</Container>
-				
-
+			<div id="bg-image"></div>
+			<Container>
+			<Row>
+			<Col id = "slogan">
+			<h1>Meet</h1>
+			<h1>Explore</h1>
+			<h1>Discover</h1>
+			<form action="/eventlist">
+			<label>
+			Enter Your Zipcode: </label>  <br/>
+			<input type="zipcode" name="name" /> <br/>
+			<input type="submit" value="Submit" onChange={this.handleChange}/>
+			</form>
+			</Col>
+			<Col><img  src={pic} id = "mainpic" alt="Older adults enjoying time together." /></Col>
+			</Row>
+			</Container>
 			</div>
+			)}
 
-		
-)}
-
-}
+	}
 	// class Register extends Component {
 	//   constructor() {
 	//     super();
@@ -96,14 +89,14 @@ class Landing extends React.Component {
 
 
 
-Landing.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-};
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(
-  mapStateToProps,
-  { logoutUser, getEvents }
-)(Landing);
+	Landing.propTypes = {
+		logoutUser: PropTypes.func.isRequired,
+		auth: PropTypes.object.isRequired
+	};
+	const mapStateToProps = state => ({
+		auth: state.auth
+	});
+	export default connect(
+		mapStateToProps,
+		{ logoutUser, getEvents }
+		)(Landing);
