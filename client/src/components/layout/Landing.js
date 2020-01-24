@@ -16,97 +16,44 @@ import "./EventList.js";
 
 class Landing extends React.Component {
 	constructor(props) {
-	    super(props);
-	    this.state = {value: ''};
-  	}
+		super(props);
+		this.state = {value: ''};
+	}
 
-  	handleChange(event) {
-    	this.setState({value: event.target.value});
-  	}
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	}
 	render(){
 		return(
 			<div id = "grad">
-				<div id="bg-image"></div>
-				<Container>
-
-				  <Row>
-				    <Col id = "slogan"><h1>Meet</h1>
-		          <h1>Explore</h1>
-		          <h1>Discover</h1>
-		          
-					</Col>
-				    <Col><img  src={pic} id = "elderlypic" alt="Picture of Elderly People" /></Col>
-				  </Row>
-
-				</Container>
-				
-
+			<div id="bg-image"></div>
+			<Container>
+			<Row>
+			<Col id = "slogan">
+			<h1>Meet</h1>
+			<h1>Explore</h1>
+			<h1>Discover</h1>
+			<form action="/eventlist">
+			<label id = "enterzip">Enter Your Zipcode: </label>  <br/>
+			<input id = "zip" type="zipcode" name="zip"/> <br/>
+			<input id = "submit" type="submit" value="Submit" onChange={this.handleChange}/>
+			</form>
+			</Col>
+			<Col><img  src={pic} id = "mainpic" alt="Older adults enjoying time together." /></Col>
+			</Row>
+			</Container>
 			</div>
-
-		
-)}
-
-}
-// <form action="/EventList">
-// 		            <label>
-// 		              Enter Your Zipcode: </label>  <br/>
-// 		              <input type="zipcode" name="name" /> <br/>
-		     
-
-// 		            <input type="submit" value="Submit" onChange={this.handleChange}/>
-// 		          </form>
-// 	// class Register extends Component {
-	//   constructor() {
-	//     super();
-	//     this.state = {
-	//       name: "",
-	//       email: "",
-	//       password: "",
-	//       password2: "",
-	//       errors: {}
-	//     };
-	//   }
-	//   componentDidMount() {
-	//     // If logged in and user navigates to Register page, should redirect them to dashboard
-	//     if (this.props.auth.isAuthenticated) {
-	//       this.props.history.push("/dashboard");
-	//     }
-	//   }
-	//   componentWillReceiveProps(nextProps) {
-	//     if (nextProps.errors) {
-	//       this.setState({
-	//         errors: nextProps.errors
-	//       });
-	//     }
-	//   }
-	//   onChange = e => {
-	//       this.setState({ [e.target.id]: e.target.value });
-	//     };
-	//   onSubmit = e => {
-	//       e.preventDefault();
-	//   const newUser = {
-	//         name: this.state.name,
-	//         email: this.state.email,
-	//         password: this.state.password,
-	//         password2: this.state.password2
-	//       };
-	//   console.log(newUser);
-	//   this.props.registerUser(newUser, this.props.history);
-	//     };
-	// render() {
-	//     const { errors } = this.state;
-
-
-
+			)}
+	}
 
 Landing.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+	logoutUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+	auth: state.auth
 });
 export default connect(
-  mapStateToProps,
-  { logoutUser, getEvents }
-)(Landing);
+	mapStateToProps,
+	{ logoutUser, getEvents }
+	)(Landing);
