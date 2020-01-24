@@ -1,5 +1,4 @@
 import React from 'react';
-//import Helmet from "react-helmet"; // head tag maker - npm install --save react-helmet
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -12,7 +11,13 @@ import { connect } from "react-redux";
 const event = {
   id: 1,
   title: 'Bowling in Brooklyn', 
-  address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
+  location: {
+    type: 'point',
+    address: '22 Cheever Pl',
+    city: 'Brooklyn',
+    state: 'NY',
+    zip: '11211'
+  }, 
   date: '1/17/2020', 
   time: '5:00 PM',
   desc: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
@@ -22,17 +27,18 @@ const event = {
 };
 
 const attendees = [
-  {id: 1, name: 'Tonya P.', imageURL: 'images/1_tonya.jpg'},
-  {id: 2, name: 'Tony W.', imageURL: 'images/2_tony.jpg'},
-  {id: 3, name: 'Tino R.', imageURL: 'images/3_tino.jpg'},
-  {id: 4, name: 'Kira W.', imageURL: 'images/2_tony.jpg'},
-  {id: 5, name: 'Leo R.', imageURL: 'images/3_tino.jpg'}
+  {id: 1, name: 'Tonya P.'},
+  {id: 2, name: 'Tony W.'},
+  {id: 3, name: 'Tino R.'},
+  {id: 4, name: 'Kira W.'},
+  {id: 5, name: 'Leo R.'}
 ];
 
 class EventInfo extends React.Component {
 
   render() {
     console.log(this.props)
+    /*
     const title = this.props.title;
     const desc = this.props.desc;
     const imageURL = this.props.imageURL;
@@ -40,24 +46,25 @@ class EventInfo extends React.Component {
     const address = this.props.address;
     const date = this.props.date;
     const time = this.props.time;
+    */
 
     return (
       <Container>
         <Row> 
           <Col align="center">
-            <h1>{title}</h1>
+            <h1>{event.title}</h1>
           </Col>
         </Row>
         <Row>
           <Col align="center">
-            <img fluid className="image"  src={process.env.PUBLIC_URL + "/" + imageURL} alt={imageAltText} />
+            <img fluid className="image"  src={process.env.PUBLIC_URL + "/" + event.imageURL} alt={event.imageAltText} />
           </Col>
         </Row>
         <Row>
           <Col align="center"> 
-            <h4>{desc}</h4>
-            <h4>Where: {address}</h4>
-            <h4>When: {date} at {time}</h4>
+            <h4>{event.description}</h4>
+            <h4>Where: {event.location.address}</h4>
+            <h4>When: {event.date} at {event.time}</h4>
           </Col>
         </Row>
 
@@ -177,7 +184,12 @@ class EventMap extends React.Component {
 
 
 class EventDetail extends React.Component {
-  render() {
+  constructor(props) {
+     super(props);
+     this.id = props.match.params.id;
+     console.log("ID IS " + this.id);
+   }
+   render() {
     return (  
       <Container>
     
@@ -197,19 +209,11 @@ class EventDetail extends React.Component {
         <Row>
           
           <Col>
-             <EventInfo 
-                title={event.title} 
-                address={event.address}
-                date={event.date}
-                time={event.time}
-                desc={event.desc}
-                imageAltText={event.imageAltText}
-                imageURL={event.imageURL}
-              />
+             <EventInfo id={this.id} />
           </Col>
 
            <Col>
-              <EventMap address={event.address} />
+              <EventMap address={event.location.address} />
           </Col>
           
          </Row>
