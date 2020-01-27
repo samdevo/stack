@@ -33,10 +33,15 @@ class Landing extends React.Component {
 			<h1>Meet</h1>
 			<h1>Explore</h1>
 			<h1>Discover</h1>
+			<form action="/list">
+			<label>
+			Enter Your Zipcode: </label>  <br/>
+			<input type="zipcode" name="name" /> <br/>
+			<input type="submit" value="Submit" onChange={this.handleChange}/>
 			<form action="/eventlist">
-			<label id = "enterzip">Enter Your Zipcode: </label>  <br/>
+			<label id = "enterzip">enter your zipcode: </label>  <br/>
 			<input id = "zip" type="zipcode" name="zip"/> <br/>
-			<input id = "submit" type="submit" value="Submit" onChange={this.handleChange}/>
+			<input id = "submitbutton" type="submit" value="Submit" onChange={this.handleChange}/>
 			</form>
 			</Col>
 			<Col><img  src={pic} id = "mainpic" alt="Older adults enjoying time together." /></Col>
