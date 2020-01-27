@@ -47,6 +47,7 @@
   width: 600px;
   height: 400px;
   border-radius: 5em;
+  box-shadow: 0 0 8px 8px white inset;
 }
 
 form {
