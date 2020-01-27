@@ -64,7 +64,7 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/nearby" component={Login} />
           <Route path="/detail/:id" component={EventDetail} />
-          <Route exact path='/list' component={EventList} />
+          <Route exact path='/list/:zip' component={EventList} />
 
 
         </div>

@@ -40,7 +40,12 @@ const attendees = [
 //console.log("Hello")
 
 class EventList extends React.Component {
-	event = (i) => {
+	constructor(props) {
+     super(props);
+     this.zip = props.match.params.zip;
+     console.log("zip IS " + this.zip);
+   }
+   event = (i) => {
 		return(
 			<Card bg = "light">
 				<Card.Title>
