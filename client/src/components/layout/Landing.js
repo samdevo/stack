@@ -38,6 +38,10 @@ class Landing extends React.Component {
 			Enter Your Zipcode: </label>  <br/>
 			<input type="zipcode" name="name" /> <br/>
 			<input type="submit" value="Submit" onChange={this.handleChange}/>
+			<form action="/eventlist">
+			<label id = "enterzip">enter your zipcode: </label>  <br/>
+			<input id = "zip" type="zipcode" name="zip"/> <br/>
+			<input id = "submitbutton" type="submit" value="Submit" onChange={this.handleChange}/>
 			</form>
 			</Col>
 			<Col><img  src={pic} id = "mainpic" alt="Older adults enjoying time together." /></Col>
@@ -47,14 +51,14 @@ class Landing extends React.Component {
 			)}
 	}
 
-	Landing.propTypes = {
-		logoutUser: PropTypes.func.isRequired,
-		auth: PropTypes.object.isRequired
-	};
-	const mapStateToProps = state => ({
-		auth: state.auth
-	});
-	export default connect(
-		mapStateToProps,
-		{ logoutUser, getEvents }
-		)(Landing);
+Landing.propTypes = {
+	logoutUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+	auth: state.auth
+});
+export default connect(
+	mapStateToProps,
+	{ logoutUser, getEvents }
+	)(Landing);
