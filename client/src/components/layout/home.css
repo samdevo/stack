@@ -86,12 +86,11 @@ form {
   color: whitesmoke;
   background: linear-gradient(to right, #84CEEB, #5AB9EA);
   border: 0;
-  padding-left: 40px;
+  padding-left: 20px;
   padding-right: 40px;
   padding-bottom: 10px;
   padding-top: 10px;
   font-family: 'Ubuntu', sans-serif;
-  margin-left: 30%;
   font-size: 20px;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
