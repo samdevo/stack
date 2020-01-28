@@ -1,5 +1,7 @@
 import React from 'react';
 import '../../App.css';
+import pic from './elders.jpg';
+import "./home.css";
 import {Container, Row, Col, Card, Button} from 'react-bootstrap'
 import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
@@ -67,7 +69,9 @@ class EventList extends React.Component {
 	}
 	render() {
 		return(
-			<Container>
+			<div id = "grad">
+      		<div id="bg-image"></div>
+      		<Container>
 				<Row>
 					<Col>
 						{this.event(0)}
@@ -79,6 +83,7 @@ class EventList extends React.Component {
 					</Col>
 				</Row>
 			</Container>
+			</div>
 		)	 
 	}
 }

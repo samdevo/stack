@@ -108,19 +108,16 @@ class EventAttendees extends React.Component {
         <Col xs={9}>
           <CardGroup>
           <Card style={{ width: '5rem' }}> 
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[0].imageURL} />
             <Card.Body>
               <Card.Title>{attendees[0].name}</Card.Title>
             </Card.Body>
           </Card>
         <Card style={{ width: '5rem' }}>
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[1].imageURL} />
-            <Card.Body>
+           <Card.Body>
               <Card.Title>{attendees[1].name}</Card.Title>
             </Card.Body>
           </Card>
           <Card style={{ width: '5rem' }}>
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[2].imageURL} />
             <Card.Body>
               <Card.Title>{attendees[2].name}</Card.Title>
             </Card.Body>
