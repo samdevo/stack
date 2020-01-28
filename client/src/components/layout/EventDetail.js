@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import { connect } from "react-redux";
+import { getEvent } from "../../actions/eventActions";
 
 const event = {
   id: 1,
@@ -190,6 +191,9 @@ class EventDetail extends React.Component {
      console.log("ID IS " + this.id);
    }
    render() {
+    this.props.getEvent({id: this.id}).then(event => {
+        console.log(event)
+    })
     return (  
       <Container>
     
@@ -239,7 +243,7 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  {  }
+  { getEvent }
 )(EventDetail);
 
 

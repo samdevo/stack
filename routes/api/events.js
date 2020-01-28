@@ -51,7 +51,7 @@ const { errors, isValid } = validateEventInput(req.body);
 });
 router.post("/getEvent", (req, res) => {
   console.log(req.body)
-  Event.findById(req.body, function(err, event){
+  Event.findById(req.body.id, function(err, event){
     res.json({event: event})
   })
   console.log("getting event")

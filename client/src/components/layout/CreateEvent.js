@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
+import Script from 'react-load-script';
 
 class CreateEvent extends React.Component {
 	constructor() {
@@ -59,6 +60,24 @@ class CreateEvent extends React.Component {
 	  //SEND REQUEST to be handled within eventActions.js
 	  this.props.createEvent(newEvent)
 	    };
+	handleScriptLoad(){
+		// Declare Options For Autocomplete 
+		  const options = { types: ['(cities)'] }; 
+		  
+		  // Initialize Google Autocomplete 
+		  /*global google*/
+		  var autocomplete = new google.maps.places.Autocomplete(
+		                        document.getElementById('location'),
+		                        options );
+		  // Avoid paying for data that you don't need by restricting the 
+		  // set of place fields that are returned to just the address
+		  // components and formatted address
+		  autocomplete.setFields(['address_components',   
+		                               'formatted_address']);
+		  // Fire Event when a suggested name is selected
+		  autocomplete.addListener('place_changed',
+		                                this.handlePlaceSelect); 
+	}
 
 	render() {
 		console.log(this.state)
@@ -67,7 +86,10 @@ class CreateEvent extends React.Component {
 		console.log(errors)
 		console.log(this.props.auth)
 		return(
-
+			<div>
+			<Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoeJXhysX2gPSHQjAn9oFIbkgypYsFFhQ&libraries=places"       
+      onLoad={this.handleScriptLoad}        
+    />        
 		<form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
@@ -141,6 +163,7 @@ class CreateEvent extends React.Component {
                 </button>
               </div>
             </form>
+            </div>
             )
 			
 	}
