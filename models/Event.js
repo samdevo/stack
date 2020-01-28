@@ -36,7 +36,7 @@ const EventSchema = new Schema({
   owner: mongoose.Schema.Types.ObjectId,
   location: pointSchema,
   description: String,
-  eventDate: Date,
+  eventDate: String,
   createdDate: Date,
   image: {
     url: String,

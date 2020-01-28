@@ -83,7 +83,7 @@ class EventList extends React.Component {
 	}
 }
 
-export default connect()(EventList);
+export default EventList;
 
 // ReactDOM.render(
 // 	 	<Display events={events}/>

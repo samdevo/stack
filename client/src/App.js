@@ -7,7 +7,7 @@ import Landing from './components/layout/Landing.js'
 import Dashboard from './components/layout/Dashboard.js'
 import EventDetail from './components/layout/EventDetail.js'
 import EventList from './components/layout/EventList.js'
-
+import CreateEvent from './components/layout/CreateEvent.js'
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
@@ -60,6 +60,7 @@ class App extends React.Component {
           <Navigation />
           <Route exact path="/" component={Landing} />
           <Route path='/dashboard' component={Dashboard}/>
+          <Route path='/createEvent' component={CreateEvent} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/nearby" component={Login} />
@@ -76,9 +77,9 @@ class App extends React.Component {
 
 
 
-function GreyScreen(){
-  return(<div style={{position: "fixed", /* above everything else */
-            top:0, left:0, bottom:0, right:0,
-            background:"rgba(0,0,0,.5)"}} zindex={100}></div>)
-}
+// function GreyScreen(){
+//   return(<div style={{position: "fixed", /* above everything else */
+//             top:0, left:0, bottom:0, right:0,
+//             background:"rgba(0,0,0,.5)"}} zindex={100}></div>)
+// }
 export default App;
