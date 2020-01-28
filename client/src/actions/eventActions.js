@@ -9,6 +9,7 @@ import {
 
 export const createEvent = eventData => dispatch => {
   console.log("creating event...")
+  console.log(eventData)
   axios
     .post("http://localhost:5000/api/events/create", eventData)
     .then(res => {
@@ -42,6 +43,17 @@ export const createEvent = eventData => dispatch => {
 
 
 // }
+
+export const getEvent = objectID => dispatch => {
+  return new Promise(function(resolve, reject){
+    axios
+    .post("http://localhost:5000/api/events/getEvent", objectID)
+    .then(res => {
+      console.log(res)
+      resolve(res)
+    })
+  })
+}
 export const getEvents = reqData => dispatch => {
 	return new Promise(function(resolve, reject){
 		axios

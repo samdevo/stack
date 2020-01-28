@@ -27,7 +27,9 @@ const { errors, isValid } = validateEventInput(req.body);
         name: req.body.name,
         owner: req.body.owner,
         createdDate: req.body.createdDate,
-        activity: req.body.activity
+        eventDate: req.body.eventDate,
+        description: req.body.description,
+        location: req.body.location
       });
       newEvent
         .save()
@@ -47,6 +49,13 @@ const { errors, isValid } = validateEventInput(req.body);
     // }
   // });
 });
+router.post("/getEvent", (req, res) => {
+  console.log(req.body)
+  Event.findById(req.body, function(err, event){
+    res.json({event: event})
+  })
+  console.log("getting event")
+})
 router.post("/getEvents", (req, res) => {
   Event.find({}, function(err, events){
     res.json({events: events})
