@@ -86,35 +86,50 @@ class Dashboard extends React.Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.eventName}
-                  id="name"
+                  value={this.state.title}
+                  error={errors.eventTitle}
+                  id="title"
                   type="text" className={classnames("", {
-                    invalid: errors.eventName
+                    invalid: errors.eventTitle
                   })}
                 />
-                <label htmlFor="name">Event Name</label>
+                <label htmlFor="name">Event Title</label>
                 <span className="red-text">
                   {errors.eventName}
                 </span>
 
-                <span className="red-text">{errors.name}</span>
+                <span className="red-text">{errors.title}</span>
               </div>
-              <div className="input-field col s12">
+             
+             <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.activity}
-                  error={errors.activity}
-                  id="activity"
+                  value={this.state.title}
+                  error={errors.eventTitle}
+                  id="title"
                   type="text" className={classnames("", {
-                    invalid: errors.activity
+                    invalid: errors.eventTitle
                   })}
                 />
-                <label htmlFor="email">Activity</label>
-                <span className="red-text">{errors.activity}</span>
+                <label htmlFor="name">Event Title</label>
+                <span className="red-text">
+                  {errors.eventName}
+                </span>
+
+                <span className="red-text">{errors.title}</span>
               </div>
               
-          
+   /*           
+          	id: 1,
+  title: 'Bowling in Brooklyn', 
+  address: 'Bowl-Mor, 22 Cheever Pl, Brooklyn, NY', 
+  date: '1/17/2020', 
+  time: '5:00 PM',
+  desc: 'Outdoor bowling across Brooklyn. Bring shoes. Friendly atmosphere, non-competitive. No experience necessary.',
+  imageURL: 'images/bowl3.jpg',
+  imageAltText: 'Bowling',
+  */
+
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button
                   style={{

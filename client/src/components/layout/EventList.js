@@ -58,7 +58,7 @@ class EventList extends React.Component {
 		 			<Card.Text>
 		 				{Events[i].desc}
 		 			</Card.Text>
-		 			<Button variant = "primary" href = {'./detail/' + Events[i].id}>
+		 			<Button variant = "primary" href = {'/detail/' + Events[i].id}>
 		 				More Info
 	 				</Button>
 	 			</Card.Body>

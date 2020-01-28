@@ -18,11 +18,19 @@ class Landing extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {value: ''};
+	    this.handleChange = this.handleChange.bind(this);
+    	this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(event) {
 		this.setState({value: event.target.value});
 	}
+
+  handleSubmit(event) {
+    // validate zip here
+    //event.preventDefault();
+  }
+
 	render(){
 		return(
 			<div id = "grad">
@@ -33,10 +41,13 @@ class Landing extends React.Component {
 			<h1>Meet</h1>
 			<h1>Explore</h1>
 			<h1>Discover</h1>
-			<form action="/list">
+			
+
+			<form action={`/list/${this.state.value}`} method="get" onSubmit={this.handleSubmit}>
+
 			<label id = "enterzip">enter your zipcode: </label>  <br/>
-			<input id = "zip" type="zipcode" name="zip"/> <br/>
-			<input id = "submitbutton" type="submit" value="Submit" onChange={this.handleChange}/>
+			<input id = "zip" value={this.state.value} onChange={this.handleChange} type="zipcode" /> <br/>
+			<input id = "submitbutton" type="submit" value="Submit" />
 			</form>
 			</Col>
 			<Col><img  src={pic} id = "mainpic" alt="Older adults enjoying time together." /></Col>
