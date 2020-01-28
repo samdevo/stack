@@ -1,5 +1,8 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+//import 'bootstrap/dist/css/bootstrap.min.css'; 
+import '../../App.css';
+import pic from './elders.jpg';
+import "./home.css";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -50,7 +53,7 @@ class EventInfo extends React.Component {
     */
 
     return (
-      <Container>
+      <Container> 
         <Row> 
           <Col align="center">
             <h1>{event.title}</h1>
@@ -58,7 +61,7 @@ class EventInfo extends React.Component {
         </Row>
         <Row>
           <Col align="center">
-            <img fluid className="image"  src={process.env.PUBLIC_URL + "/" + event.imageURL} alt={event.imageAltText} />
+            <img  src={process.env.PUBLIC_URL + "/" + event.imageURL} id = "mainpic" alt={event.imageAltText} />
           </Col>
         </Row>
         <Row>
@@ -106,19 +109,16 @@ class EventAttendees extends React.Component {
         <Col xs={9}>
           <CardGroup>
           <Card style={{ width: '5rem' }}> 
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[0].imageURL} />
             <Card.Body>
               <Card.Title>{attendees[0].name}</Card.Title>
             </Card.Body>
           </Card>
         <Card style={{ width: '5rem' }}>
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[1].imageURL} />
-            <Card.Body>
+           <Card.Body>
               <Card.Title>{attendees[1].name}</Card.Title>
             </Card.Body>
           </Card>
           <Card style={{ width: '5rem' }}>
-            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/" + attendees[2].imageURL} />
             <Card.Body>
               <Card.Title>{attendees[2].name}</Card.Title>
             </Card.Body>
@@ -195,6 +195,8 @@ class EventDetail extends React.Component {
         console.log(event)
     })
     return (  
+      <div id = "grad">
+      <div id="bg-image"></div>
       <Container>
     
         <style type="text/css">
@@ -231,6 +233,7 @@ class EventDetail extends React.Component {
          </Row>
             
       </Container>
+      </div>
 
     ); 
   }
