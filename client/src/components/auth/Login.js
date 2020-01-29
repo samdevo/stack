@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import "./login.css"
 class Login extends Component {
   constructor() {
     super();
@@ -43,7 +44,28 @@ this.props.loginUser(userData);
   };
 render() {
     const { errors } = this.state;
+    document.body.style.display = "Block"
 return (
+  <div>
+  <div id="main">
+    <p id="login" align="center">Welcome Back!</p>
+    <form id="login" onSubmit={this.onSubmit}>
+      <input 
+                  onChange={this.onChange}
+                  value={this.state.email}
+                  error={errors.email}
+                  type="email"id="email" type="text" align="center" placeholder="enter your email address"/>
+      <input onChange={this.onChange}
+                  value={this.state.password}
+                  error={errors.password}
+                  id="password" type="password" align="center" placeholder="enter your password"/>
+      <button type="submit" id="submit" style={{paddingRight: "50px"}} align="center">Connect</button>
+      <p id="forgot" align="center"><a href="#">I forgot my password</a></p>  
+      </form>   
+      </div>  
+          
+    
+{/*
       <div className="container">
         <div style={{ marginTop: "4rem" }} className="row">
           <div className="col s8 offset-s2">
@@ -53,13 +75,13 @@ return (
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b>Login</b> below
+                <b>Login to Senior Connect</b> below
               </h4>
               <p className="grey-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
-      {/*FORM STARTS HERE */}
+      FORM STARTS HERE 
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
@@ -111,6 +133,8 @@ return (
             </form>
           </div>
         </div>
+      </div>
+      */}
       </div>
     );
   }

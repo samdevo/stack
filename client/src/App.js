@@ -1,15 +1,19 @@
 import React from 'react';
 import Login from './components/auth/Login'
+import LoginPopup from './components/auth/LoginPopup'
 import Register from './components/auth/Register'
 import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing.js'
 import Dashboard from './components/layout/Dashboard.js'
-
+import EventDetail from './components/layout/EventDetail.js'
+import EventList from './components/layout/EventList.js'
+import CreateEvent from './components/layout/CreateEvent.js'
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+// import {Display} from "./components/layout/EventList.js"
 
 
 
@@ -56,12 +60,26 @@ class App extends React.Component {
           <Navigation />
           <Route exact path="/" component={Landing} />
           <Route path='/dashboard' component={Dashboard}/>
+          <Route path='/createEvent' component={CreateEvent} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/nearby" component={Login} />
+          <Route path="/detail/:id" component={EventDetail} />
+          <Route exact path='/list/:zip' component={EventList} />
+
+
         </div>
       </Router>
       </Provider>
       )
     }
 }
+
+
+
+// function GreyScreen(){
+//   return(<div style={{position: "fixed", /* above everything else */
+//             top:0, left:0, bottom:0, right:0,
+//             background:"rgba(0,0,0,.5)"}} zindex={100}></div>)
+// }
 export default App;

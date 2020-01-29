@@ -11,8 +11,8 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post("/createevent", (req, res) => {
-	console.log("creating event...")
+router.post("/register", (req, res) => {
+	console.log("creating user...")
   // Form validation
 const { errors, isValid } = validateRegisterInput(req.body);
 // Check validation
@@ -46,6 +46,16 @@ User.findOne({ email: req.body.email }).then(user => {
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
+router.post("/getUserInfo", (req, res) => {
+
+  res.json({test:"This is a test"})
+
+
+
+
+
+
+})
 router.post("/login", (req, res) => {
   // Form validation
 const { errors, isValid } = validateLoginInput(req.body);

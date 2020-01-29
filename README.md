@@ -1,12 +1,8 @@
 # stack
 
-run npm install
+*copy and paste the following:*
 
-cd into client and run npm install again 
-
-cd ..
-
-npm run dev
+npm install && cd client && npm install && cd .. && npm run dev
 
 
 NOTE: on riverdale wifi, mongodb connection won't work bc of the firewall
