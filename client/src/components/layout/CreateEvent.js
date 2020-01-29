@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import Script from 'react-load-script';
+var autocomplete;
 
 class CreateEvent extends React.Component {
 	constructor() {
@@ -21,6 +22,7 @@ class CreateEvent extends React.Component {
 	      eventDate: Date,
 	      errors: {}
 	    };
+	    // this.autocomplete;
 	  }
 	  componentDidMount() {
 	    // If not logged in, send user to landing page
@@ -66,18 +68,37 @@ class CreateEvent extends React.Component {
 		  
 		  // Initialize Google Autocomplete 
 		  /*global google*/
-		  var autocomplete = new google.maps.places.Autocomplete(
+		  this.autocomplete = new google.maps.places.Autocomplete(
 		                        document.getElementById('location'),
 		                        options );
 		  // Avoid paying for data that you don't need by restricting the 
 		  // set of place fields that are returned to just the address
 		  // components and formatted address
-		  autocomplete.setFields(['address_components',   
+		  this.autocomplete.setFields(['address_components',   
 		                               'formatted_address']);
 		  // Fire Event when a suggested name is selected
-		  autocomplete.addListener('place_changed',
+		  this.autocomplete.addListener('place_changed',
 		                                this.handlePlaceSelect); 
 	}
+	handlePlaceSelect () {
+		console.log("selected")
+
+    // Extract City From Address Object
+    const addressObject = this.autocomplete.getPlace();
+    console.log("got place")
+    console.log(addressObject)
+    const address = addressObject.address_components;
+
+    // Check if address is valid
+    if (address) {
+      // Set State
+      console.log({
+          city: address[0].long_name,
+          query: addressObject.formatted_address,
+        }
+      );
+    }
+  }
 
 	render() {
 		console.log(this.state)
@@ -87,7 +108,7 @@ class CreateEvent extends React.Component {
 		console.log(this.props.auth)
 		return(
 			<div>
-			<Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoeJXhysX2gPSHQjAn9oFIbkgypYsFFhQ&libraries=places"       
+			<Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&libraries=places"       
       onLoad={this.handleScriptLoad}        
     />        
 		<form noValidate onSubmit={this.onSubmit}>
@@ -123,7 +144,6 @@ class CreateEvent extends React.Component {
               </div>
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
                   value={this.state.activity}
                   error={errors.activity}
                   id="location"
