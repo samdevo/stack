@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import Script from 'react-load-script';
-var autocomplete;
+import Autocomplete from 'react-google-autocomplete';
+// var autocomplete;
 
 class CreateEvent extends React.Component {
 	constructor() {
@@ -22,6 +23,7 @@ class CreateEvent extends React.Component {
 	      eventDate: Date,
 	      errors: {}
 	    };
+      // this.autocomplete = null
 	    // this.autocomplete;
 	  }
 	  componentDidMount() {
@@ -62,44 +64,46 @@ class CreateEvent extends React.Component {
 	  //SEND REQUEST to be handled within eventActions.js
 	  this.props.createEvent(newEvent)
 	    };
-	handleScriptLoad(){
-		// Declare Options For Autocomplete 
-		  const options = { types: ['(cities)'] }; 
+	// handleScriptLoad(){
+	// 	// Declare Options For Autocomplete 
+	// 	  const options = { types: ['(cities)'] }; 
 		  
-		  // Initialize Google Autocomplete 
-		  /*global google*/
-		  this.autocomplete = new google.maps.places.Autocomplete(
-		                        document.getElementById('location'),
-		                        options );
-		  // Avoid paying for data that you don't need by restricting the 
-		  // set of place fields that are returned to just the address
-		  // components and formatted address
-		  this.autocomplete.setFields(['address_components',   
-		                               'formatted_address']);
-		  // Fire Event when a suggested name is selected
-		  this.autocomplete.addListener('place_changed',
-		                                this.handlePlaceSelect); 
-	}
-	handlePlaceSelect () {
-		console.log("selected")
+	// 	  // Initialize Google Autocomplete 
+	// 	  /*global google*/
+	// 	  this.autocomplete = new google.maps.places.Autocomplete(
+	// 	                        document.getElementById('location'),
+	// 	                        options );
+	// 	  // Avoid paying for data that you don't need by restricting the 
+	// 	  // set of place fields that are returned to just the address
+	// 	  // components and formatted address
+	// 	  this.autocomplete.setFields(['address_components',   
+	// 	                               'formatted_address']);
+	// 	  // Fire Event when a suggested name is selected
+	// 	  this.autocomplete.addListener('place_changed',
+	// 	                                this.handlePlaceSelect); 
+	// }
+	// handlePlaceSelect () {
+	// 	console.log("selected")
 
-    // Extract City From Address Object
-    const addressObject = this.autocomplete.getPlace();
-    console.log("got place")
-    console.log(addressObject)
-    const address = addressObject.address_components;
+ //    // Extract City From Address Object
+ //    const addressObject = this.autocomplete.getPlace();
+ //    console.log("got place")
+ //    console.log(addressObject)
+ //    const address = addressObject.address_components;
 
-    // Check if address is valid
-    if (address) {
-      // Set State
-      console.log({
-          city: address[0].long_name,
-          query: addressObject.formatted_address,
-        }
-      );
-    }
-  }
-
+ //    // Check if address is valid
+ //    if (address) {
+ //      // Set State
+ //      console.log({
+ //          city: address[0].long_name,
+ //          query: addressObject.formatted_address,
+ //        }
+ //      );
+ //    }
+ //  }
+// <Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&libraries=places"       
+    //   onLoad={this.handleScriptLoad}        
+    // />        
 	render() {
 		console.log(this.state)
 		const { errors } = this.state
@@ -108,9 +112,7 @@ class CreateEvent extends React.Component {
 		console.log(this.props.auth)
 		return(
 			<div>
-			<Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&libraries=places"       
-      onLoad={this.handleScriptLoad}        
-    />        
+			
 		<form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
@@ -143,14 +145,13 @@ class CreateEvent extends React.Component {
                 <span className="red-text">{errors.activity}</span>
               </div>
               <div className="input-field col s12">
-                <input
-                  value={this.state.activity}
-                  error={errors.activity}
-                  id="location"
-                  type="text" className={classnames("", {
-                    invalid: errors.activity
-                  })}
-                />
+                <Autocomplete
+    onPlaceSelected={(place) => {
+      console.log(place);
+    }}
+    types={[]}
+    componentRestrictions={{country: "us"}}
+/>
                 <label htmlFor="email">Location name</label>
                 <span className="red-text">{errors.activity}</span>
               </div>
