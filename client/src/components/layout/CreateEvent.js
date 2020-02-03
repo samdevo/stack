@@ -19,10 +19,10 @@ class CreateEvent extends React.Component {
 	      name: "",
 	      description: "",
 	      location: {},
-	      image: "",
-	      eventDate: Date,
+	      eventDate: "",
 	      errors: {}
 	    };
+      this.location = {}
       // this.autocomplete = null
 	    // this.autocomplete;
 	  }
@@ -46,17 +46,35 @@ class CreateEvent extends React.Component {
 	  	if(e != "location"){
 	      this.setState({ [e.target.id]: e.target.value });
 	  	}
+      console.log(this.state)
 	    };
 
-	  onSubmit() {//user wants to create new event
+	  onSubmit = e => {//user wants to create new event
+      const iterator = this.location.address_components.values()
+      for (const val of iterator){
+        if(val.types[0] == "postal_code"){
+
+          this.location.zip = val.long_name
+        }
+      }
 	  	var name = document.getElementById("name").value
+      console.log(name)
 	  	var description = document.getElementById("description").value
-	  	var loc = {name: document.getElementById("location").value}
+	  	var loc = {
+        name: this.location.name,
+        address: this.location.formatted_address,
+        coordinates: {lat: this.location.geometry.location.lat(),lng: this.location.geometry.location.lng()},
+        zip: this.location.zip,
+        placeId: this.location.place_id
+
+
+      }
+      console.log(loc)
 	  	var date = document.getElementById("date").value
 	      // e.preventDefault();
 	  const newEvent = {
-	        name: name,
-	        description: description,
+	        name: this.state.name,
+	        description: this.state.description,
 	        location: loc,
 	        eventDate: date,
 	        createdDate: Date.now(),
@@ -64,9 +82,9 @@ class CreateEvent extends React.Component {
 
 	      };
 	  //SEND REQUEST to be handled within eventActions.js
-	  // this.props.createEvent(newEvent).then(res => {
-   //    console.log(res)
-   //  })
+	  this.props.createEvent(newEvent).then(res => {
+      console.log(res)
+    })
 	    };
 	// handleScriptLoad(){
 	// 	// Declare Options For Autocomplete 
@@ -148,9 +166,11 @@ class CreateEvent extends React.Component {
                 <span className="red-text">{errors.activity}</span>
               </div>
               <div className="input-field col s12">
-                <Autocomplete
+                <Autocomplete id="location"
     onPlaceSelected={(place) => {
-      console.log(place);
+      this.location = place
+      this.location.name = document.getElementById("location").value.split(",")[0]
+      console.log(this.location)
     }}
     types={[]}
     componentRestrictions={{country: "us"}}
@@ -161,7 +181,7 @@ class CreateEvent extends React.Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  id="date"
+                  id="eventDate"
                   type="datetime-local" className={classnames("", {
                     invalid: errors.activity
                   })}
@@ -175,7 +195,7 @@ class CreateEvent extends React.Component {
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 
               </div>
-              <button onclick={this.onSubmit()}>
+              <button onClick={this.onSubmit}>
                   Create Event
                 </button>
 

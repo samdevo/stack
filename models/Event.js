@@ -2,15 +2,20 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 
-
+const latlng = new mongoose.Schema({
+  lat:{
+    type: Number
+  },
+  lng:{
+    type: Number
+  }
+})
 const pointSchema = new mongoose.Schema({
   type: {
     type: String,
     enum: ['Point']
   },
-  coordinates: {
-    type: [Number]
-  },
+  coordinates: latlng,
   name: {
     type: String
   },
@@ -24,6 +29,9 @@ const pointSchema = new mongoose.Schema({
     type: String
   },
   zip: {
+    type: String
+  },
+  placeId: {
     type: String
   }
 });
