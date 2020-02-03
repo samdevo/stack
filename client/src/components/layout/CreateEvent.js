@@ -42,16 +42,18 @@ class CreateEvent extends React.Component {
 	    }
 	  }
 	  onChange = e => { //update state on input change
+      e.preventDefault()
 	  	if(e != "location"){
 	      this.setState({ [e.target.id]: e.target.value });
 	  	}
 	    };
-	  onSubmit = e => {//user wants to create new event
+
+	  onSubmit() {//user wants to create new event
 	  	var name = document.getElementById("name").value
 	  	var description = document.getElementById("description").value
 	  	var loc = {name: document.getElementById("location").value}
 	  	var date = document.getElementById("date").value
-	      e.preventDefault();
+	      // e.preventDefault();
 	  const newEvent = {
 	        name: name,
 	        description: description,
@@ -62,7 +64,9 @@ class CreateEvent extends React.Component {
 
 	      };
 	  //SEND REQUEST to be handled within eventActions.js
-	  this.props.createEvent(newEvent)
+	  // this.props.createEvent(newEvent).then(res => {
+   //    console.log(res)
+   //  })
 	    };
 	// handleScriptLoad(){
 	// 	// Declare Options For Autocomplete 
@@ -113,7 +117,6 @@ class CreateEvent extends React.Component {
 		return(
 			<div>
 			
-		<form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
@@ -170,20 +173,12 @@ class CreateEvent extends React.Component {
               
           
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
+                
+              </div>
+              <button onclick={this.onSubmit()}>
                   Create Event
                 </button>
-              </div>
-            </form>
+
             </div>
             )
 			
