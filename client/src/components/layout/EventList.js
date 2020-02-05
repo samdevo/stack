@@ -21,11 +21,11 @@ const Events = [
   imageAltText: 'Bowling',
   attendees: [1,2,3]},
   {id: 2,
-  title: 'Going to a book club',
+  title: 'Book club meeting',
   address: '150 East 86th St, New York, NY',
   date: '2/21/2020',
   time: "8:30 PM",
-  desc: "We're going to a book club at Barnes & Noble to discuss a recent book.",
+  desc: "We're going to a book club meeting at Barnes & Noble to discuss Peripheral by William Gibson.",
   imageURL: "./elders.jpg",
   imageAltText: "older adults",
   atendees: [1,4,5]},
@@ -54,7 +54,7 @@ class EventList extends React.Component {
 			 		{Events[i].title}
 		 		</Card.Title>
 		 		<Card.Subtitle>
-		 			{Events[i].date + Events[i].time}
+		 			{Events[i].date + " at " + Events[i].time}
 	 			</Card.Subtitle>
 		 		<Card.Body>
 		 			<Card.Text>
@@ -73,6 +73,10 @@ class EventList extends React.Component {
       		<div id="bg-image"></div>
       		<Container>
 				<Row>
+					<Col>
+						<h1>Events near {this.zip}</h1>
+					</Col>
+				</Row><Row>
 					<Col>
 						{this.event(0)}
 					</Col>

@@ -188,11 +188,13 @@ class EventDetail extends React.Component {
   constructor(props) {
      super(props);
      this.id = props.match.params.id;
-     console.log("ID IS " + this.id);
+     console.log("id is " + this.id);
+     // USE ID 5e308a9359ad05baaa91d614
    }
    render() {
     this.props.getEvent({id: this.id}).then(event => {
         console.log(event)
+        // event: {attendees: Array(0), _id: "5e308a9359ad05baaa91d614", name: "NAME",
     })
     return (  
       <div id = "grad">
