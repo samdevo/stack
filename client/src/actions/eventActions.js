@@ -10,11 +10,12 @@ import {
 export const createEvent = eventData => dispatch => {
   console.log("creating event...")
   console.log(eventData)
+  return new Promise(function(resolve, reject){
   axios
     .post("http://localhost:5000/api/events/create", eventData)
     .then(res => {
       console.log(res)
-      return res
+      resolve(res)
     }) // re-direct to login on successful register
     .catch(err =>{
       // console.log(err.response.data)
@@ -24,6 +25,7 @@ export const createEvent = eventData => dispatch => {
       })
     }
     );
+  })
 }
 // export default createEvent
 
