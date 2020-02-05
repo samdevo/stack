@@ -33,6 +33,9 @@ const pointSchema = new mongoose.Schema({
   },
   placeId: {
     type: String
+  },
+  address: {
+    type: String
   }
 });
 

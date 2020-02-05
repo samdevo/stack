@@ -50,8 +50,9 @@ class CreateEvent extends React.Component {
 	    };
 
 	  onSubmit = e => {//user wants to create new event
-      const iterator = this.location.address_components.values()
-      for (const val of iterator){
+      var comps = this.location.address_components
+      for (var i = 0; i < comps.length; i++){
+        var val = comps[i]
         if(val.types[0] == "postal_code"){
 
           this.location.zip = val.long_name
@@ -70,17 +71,18 @@ class CreateEvent extends React.Component {
 
       }
       console.log(loc)
-	  	var date = document.getElementById("date").value
+	  	// var date = document.getElementById("date").value
 	      // e.preventDefault();
 	  const newEvent = {
 	        name: this.state.name,
 	        description: this.state.description,
 	        location: loc,
-	        eventDate: date,
+	        eventDate: this.state.eventDate,
 	        createdDate: Date.now(),
 	        owner: this.props.auth.user.id
 
 	      };
+        console.log(newEvent)
 	  //SEND REQUEST to be handled within eventActions.js
 	  this.props.createEvent(newEvent).then(res => {
       console.log(res)
