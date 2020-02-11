@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const fs = require('fs')
+const neatCsv = require('neat-csv');
 // Load input validation
 const validateEventInput = require("../../validation/event");
 // Load User model
@@ -10,6 +12,25 @@ const Event = require("../../models/Event");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
+zips = {}
+fs.readFile('./us-zip-code-latitude-and-longitude.csv', async (err, data) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  var d = await neatCsv(data)
+  // console.log(d)
+  // zips = {}
+  for(var i = 0; i < d.length; i++){
+    // console.log(d[i]['0'].split(';')[0])
+    // console.log(d[i]['0'].split(';')[4])
+    // console.log(d[i]['0'].split(';')[0].toString())
+    zips[d[i]['0'].split(';')[0]] = [parseFloat(d[i]['0'].split(';')[4]), parseFloat(d[i]['0'].split(';')[3])]
+    // console.log(zips)
+  }
+  console.log(zips['10471'])
+  // console.log(zips)
+})
 router.post("/create", (req, res) => {
     console.log("creating event...")
   // Form validation
@@ -29,8 +50,15 @@ const { errors, isValid } = validateEventInput(req.body);
         createdDate: req.body.createdDate,
         eventDate: req.body.eventDate,
         description: req.body.description,
-        location: req.body.location
+        location: req.body.location,
+        queryLoc: {type: "Point", coordinates: req.body.location.coordinates}
       });
+      // name: this.state.name,
+      //     description: this.state.description,
+      //     location: loc,
+      //     eventDate: this.state.eventDate,
+      //     createdDate: Date.now(),
+      //     owner: this.props.auth.user.id
       newEvent
         .save()
         .then(event => res.json(event))
@@ -50,18 +78,51 @@ const { errors, isValid } = validateEventInput(req.body);
   // });
 });
 router.post("/getEvent", (req, res) => {
-  console.log(req.body)
+  // console.log(req.body.zip)
   Event.findById(req.body.id, function(err, event){
     res.json({event: event})
   })
   console.log("getting event")
 })
 router.post("/getEvents", (req, res) => {
-  Event.find({}, function(err, events){
-    res.json({events: events})
-  })
+  milesDistance = 5
+ console.log(req.body.zip)
   console.log("getting events")
+  Event.find({
+  queryLoc: {
+   $near: {
+    $maxDistance: 1609*milesDistance,
+    $geometry: {
+     type: "Point",
+     coordinates: zips[req.body.zip]
+    }
+   }
+  }
+ }).find((error, results) => {
+  console.log(results);
+  res.json(results)
+  if (error) console.log(error);
+ });
   
+})
+
+router.post("/test", (req, res) => {
+  milesDistance = 20
+  Event.find({
+  queryLoc: {
+   $near: {
+    $maxDistance: 1609*milesDistance,
+    $geometry: {
+     type: "Point",
+     coordinates: [-73.9007, 40.8997]
+    }
+   }
+  }
+ }).find((error, results) => {
+  console.log(results);
+  res.json(results)
+  if (error) console.log(error);
+ });
 })
 
 
