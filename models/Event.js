@@ -2,20 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 
-const latlng = new mongoose.Schema({
-  lat:{
-    type: Number
-  },
-  lng:{
-    type: Number
-  }
-})
 const pointSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['Point']
-  },
-  coordinates: latlng,
+  coordinates: [],
   name: {
     type: String
   },
@@ -53,8 +41,17 @@ const EventSchema = new Schema({
     url: String,
     altText: String
   },
-  attendees: [mongoose.Schema.Types.ObjectId]
+  attendees: [mongoose.Schema.Types.ObjectId],
+  queryLoc: {
+   type: { type: String },
+   coordinates: []
+  }
 });
 
+EventSchema.index({queryLoc:"2dsphere"});
 
-module.exports = Event = mongoose.model("events", EventSchema);
+var Event = mongoose.model("events", EventSchema);
+
+
+
+module.exports = Event
