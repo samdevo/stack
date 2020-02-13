@@ -12,6 +12,7 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import { connect } from "react-redux";
 import { getEvent } from "../../actions/eventActions";
 
+/*
 const event = {
   id: 1,
   title: 'Bowling in Brooklyn', 
@@ -29,7 +30,7 @@ const event = {
   imageAltText: 'Bowling',
   attendees: [1,2,3]
 };
-
+*/
 const attendees = [
   {id: 1, name: 'Tonya P.'},
   {id: 2, name: 'Tony W.'},
@@ -41,34 +42,26 @@ const attendees = [
 class EventInfo extends React.Component {
 
   render() {
-    console.log(this.props)
-    /*
-    const title = this.props.title;
-    const desc = this.props.desc;
-    const imageURL = this.props.imageURL;
-    const imageAltText = this.props.imageAltText;
-    const address = this.props.address;
-    const date = this.props.date;
-    const time = this.props.time;
-    */
+    const e = this.props.e;
+    console.log(e.name); 
 
     return (
       <Container> 
         <Row> 
           <Col align="center">
-            <h1>{event.title}</h1>
+            <h1>{e.name}</h1>
           </Col>
         </Row>
         <Row>
           <Col align="center">
-            <img  src={process.env.PUBLIC_URL + "/" + event.imageURL} id = "mainpic" alt={event.imageAltText} />
+            <img  src={process.env.PUBLIC_URL + "/" + e.eventimageURL} id = "mainpic" alt={e.imageAltText} />
           </Col>
         </Row>
         <Row>
           <Col align="center"> 
-            <h4>{event.description}</h4>
-            <h4>Where: {event.location.address}</h4>
-            <h4>When: {event.date} at {event.time}</h4>
+            <h4>{e.description}</h4>
+            <h4>{e.location.address}</h4>
+            <h4>{e.date} at {e.time}</h4>
           </Col>
         </Row>
 
@@ -85,6 +78,7 @@ class EventInfo extends React.Component {
             &nbsp;           
           </Col>
         </Row>
+       
       </Container>  
       
     )
@@ -151,7 +145,7 @@ class EventAttendees extends React.Component {
 
 class EventMap extends React.Component {
   render() {
-    const address = event.address; // map should be dynamic based on this address
+    //const myevent = this.props.myevent; // map should be dynamic based on this address
     
     return (
       <Container>
@@ -189,13 +183,43 @@ class EventDetail extends React.Component {
      super(props);
      this.id = props.match.params.id;
      console.log("id is " + this.id);
-     // USE ID 5e308a9359ad05baaa91d614
+     this.state = {
+        e: { empty: true,
+          location: {
+            address: ""
+          },
+          date:""
+        }
+      }
+     // USE ID "5e3af2a6db2d474bee3e535a"
+   }
+   componentDidMount(){
+    var myevent;
+    this.props.getEvent({id: this.id}).then(myevent => {
+        console.log("getevent");
+        var date = myevent.data.event.eventDate.split('T').shift().split('-').reverse();
+        var temp = date[0]; // reverse to mm/dd
+        date[0] = date[1];
+        date[1] = temp;                     
+        date = date.join('/');  // join with "/"      -> "09/11/2015"
+        var time = myevent.data.event.eventDate.split('T').pop().split(':'); // split on the "T"   -> ["2015-11-09", "10:..."]
+        if (time[0] > 12) {
+          time[0] = time[0] - 12;
+          time = time.join(':') + " PM";
+        }
+        else {
+          time = time.join(':') + " AM";
+        }
+        myevent.data.event.time = time;                      
+        myevent.data.event.date = date;
+        myevent.data.event.empty = false;
+        this.setState({e: myevent.data.event});
+      })
    }
    render() {
-    this.props.getEvent({id: this.id}).then(event => {
-        console.log(event)
-        // event: {attendees: Array(0), _id: "5e308a9359ad05baaa91d614", name: "NAME",
-    })
+    
+      
+    if(!this.state.e.empty){
     return (  
       <div id = "grad">
       <div id="bg-image"></div>
@@ -217,11 +241,11 @@ class EventDetail extends React.Component {
         <Row>
           
           <Col>
-             <EventInfo id={this.id} />
+             <EventInfo e={this.state.e} />
           </Col>
 
            <Col>
-              <EventMap address={event.location.address} />
+              <EventMap  />
           </Col>
           
          </Row>
@@ -238,6 +262,7 @@ class EventDetail extends React.Component {
       </div>
 
     ); 
+  }else{return(<h1> loading... </h1>)}
   }
 }    
 
@@ -251,7 +276,9 @@ export default connect(
   { getEvent }
 )(EventDetail);
 
+/*
 
+            */
 
 
 
