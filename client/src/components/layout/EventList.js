@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import ReactDOM from 'react-dom';
+import Geocode from 'react-geocode'
 
 const Events = [
   {id: "5e436388bbb8dc687df43ca3",
@@ -46,6 +47,19 @@ class EventList extends React.Component {
      super(props);
      this.zip = props.match.params.zip;
      console.log("zip IS " + this.zip);
+     this.props.getEvents({zip: this.zip})
+     Geocode.setApiKey("AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54");
+
+     Geocode.fromAddress("Eiffel Tower").then(
+  response => {
+    const { lat, lng } = response.results[0].geometry.location;
+    console.log(lat, lng);
+  },
+  error => {
+    console.error(error);
+  }
+);
+  // d
    }
    event = (i) => {
 		return(
@@ -92,7 +106,13 @@ class EventList extends React.Component {
 	}
 }
 
-export default EventList;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { getEvents }
+)(EventList)
 
 // ReactDOM.render(
 // 	 	<Display events={events}/>

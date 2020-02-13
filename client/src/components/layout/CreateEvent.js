@@ -64,9 +64,10 @@ class CreateEvent extends React.Component {
 	  	var loc = {
         name: this.location.name,
         address: this.location.formatted_address,
-        coordinates: {lat: this.location.geometry.location.lat(),lng: this.location.geometry.location.lng()},
+        coordinates: [this.location.geometry.location.lng(), this.location.geometry.location.lat()],
         zip: this.location.zip,
-        placeId: this.location.place_id
+        placeId: this.location.place_id,
+        type: "Point"
 
 
       }
