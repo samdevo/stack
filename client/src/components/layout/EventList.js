@@ -68,12 +68,11 @@ class EventList extends React.Component {
 					<Card.Title>
 						{event.name}
 			 		</Card.Title>
-			 		<Card.Subtitle>
-						{ formatDate(event.eventDate) } at { formatTime(event.eventDate) }
-	 				</Card.Subtitle>
-		 			<Card.Body>
+			 		<Card.Body>
 						<Card.Text>
-			 				{event.description}
+			 				{ formatDate(event.eventDate) }, { formatTime(event.eventDate) } 
+			 				at { event.location.address}<br />
+			 				{ event.description }
 		 				</Card.Text>
 		 				<Button variant = "primary" href = {'/detail/' + event._id} >
 							More Info
