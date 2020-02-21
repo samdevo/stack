@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import ReactDOM from 'react-dom';
+import Geocode from 'react-geocode'
 
 const Events = [
   {id: 1,
@@ -21,11 +22,11 @@ const Events = [
   imageAltText: 'Bowling',
   attendees: [1,2,3]},
   {id: 2,
-  title: 'Going to a book club',
+  title: 'Book club meeting',
   address: '150 East 86th St, New York, NY',
   date: '2/21/2020',
   time: "8:30 PM",
-  desc: "We're going to a book club at Barnes & Noble to discuss a recent book.",
+  desc: "We're going to a book club meeting at Barnes & Noble to discuss Peripheral by William Gibson.",
   imageURL: "./elders.jpg",
   imageAltText: "older adults",
   atendees: [1,4,5]},
@@ -46,6 +47,19 @@ class EventList extends React.Component {
      super(props);
      this.zip = props.match.params.zip;
      console.log("zip IS " + this.zip);
+     this.props.getEvents({zip: this.zip})
+     Geocode.setApiKey("AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54");
+
+     Geocode.fromAddress("Eiffel Tower").then(
+  response => {
+    const { lat, lng } = response.results[0].geometry.location;
+    console.log(lat, lng);
+  },
+  error => {
+    console.error(error);
+  }
+);
+  // d
    }
    event = (i) => {
 		return(
@@ -54,7 +68,7 @@ class EventList extends React.Component {
 			 		{Events[i].title}
 		 		</Card.Title>
 		 		<Card.Subtitle>
-		 			{Events[i].date + Events[i].time}
+		 			{Events[i].date + " at " + Events[i].time}
 	 			</Card.Subtitle>
 		 		<Card.Body>
 		 			<Card.Text>
@@ -74,6 +88,10 @@ class EventList extends React.Component {
       		<Container>
 				<Row>
 					<Col>
+						<h1>Events near {this.zip}</h1>
+					</Col>
+				</Row><Row>
+					<Col>
 						{this.event(0)}
 					</Col>
 				</Row>
@@ -88,7 +106,13 @@ class EventList extends React.Component {
 	}
 }
 
-export default EventList;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { getEvents }
+)(EventList)
 
 // ReactDOM.render(
 // 	 	<Display events={events}/>

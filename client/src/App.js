@@ -55,6 +55,7 @@ class App extends React.Component {
       //simple routing - renders different components based on URL route
       return(
         <Provider store={store}>
+          
          <Router>
         <div className="App">
           <Navigation />

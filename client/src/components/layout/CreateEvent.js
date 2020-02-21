@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { createEvent, getEvents } from "../../actions/eventActions";
 import Script from 'react-load-script';
-var autocomplete;
+import Autocomplete from 'react-google-autocomplete';
+// var autocomplete;
 
 class CreateEvent extends React.Component {
 	constructor() {
@@ -18,10 +19,11 @@ class CreateEvent extends React.Component {
 	      name: "",
 	      description: "",
 	      location: {},
-	      image: "",
-	      eventDate: Date,
+	      eventDate: "",
 	      errors: {}
 	    };
+      this.location = {}
+      // this.autocomplete = null
 	    // this.autocomplete;
 	  }
 	  componentDidMount() {
@@ -40,66 +42,93 @@ class CreateEvent extends React.Component {
 	    }
 	  }
 	  onChange = e => { //update state on input change
+      e.preventDefault()
 	  	if(e != "location"){
 	      this.setState({ [e.target.id]: e.target.value });
 	  	}
+      console.log(this.state)
 	    };
+
 	  onSubmit = e => {//user wants to create new event
+      var comps = this.location.address_components
+      for (var i = 0; i < comps.length; i++){
+        var val = comps[i]
+        if(val.types[0] == "postal_code"){
+
+          this.location.zip = val.long_name
+        }
+      }
 	  	var name = document.getElementById("name").value
+      console.log(name)
 	  	var description = document.getElementById("description").value
-	  	var loc = {name: document.getElementById("location").value}
-	  	var date = document.getElementById("date").value
-	      e.preventDefault();
+	  	var loc = {
+        name: this.location.name,
+        address: this.location.formatted_address,
+        coordinates: [this.location.geometry.location.lng(), this.location.geometry.location.lat()],
+        zip: this.location.zip,
+        placeId: this.location.place_id,
+        type: "Point"
+
+
+      }
+      console.log(loc)
+	  	// var date = document.getElementById("date").value
+	      // e.preventDefault();
 	  const newEvent = {
-	        name: name,
-	        description: description,
+	        name: this.state.name,
+	        description: this.state.description,
 	        location: loc,
-	        eventDate: date,
+	        eventDate: this.state.eventDate,
 	        createdDate: Date.now(),
 	        owner: this.props.auth.user.id
 
 	      };
+        console.log(newEvent)
 	  //SEND REQUEST to be handled within eventActions.js
-	  this.props.createEvent(newEvent)
+	  this.props.createEvent(newEvent).then(res => {
+      console.log(res)
+    })
 	    };
-	handleScriptLoad(){
-		// Declare Options For Autocomplete 
-		  const options = { types: ['(cities)'] }; 
+	// handleScriptLoad(){
+	// 	// Declare Options For Autocomplete 
+	// 	  const options = { types: ['(cities)'] }; 
 		  
-		  // Initialize Google Autocomplete 
-		  /*global google*/
-		  this.autocomplete = new google.maps.places.Autocomplete(
-		                        document.getElementById('location'),
-		                        options );
-		  // Avoid paying for data that you don't need by restricting the 
-		  // set of place fields that are returned to just the address
-		  // components and formatted address
-		  this.autocomplete.setFields(['address_components',   
-		                               'formatted_address']);
-		  // Fire Event when a suggested name is selected
-		  this.autocomplete.addListener('place_changed',
-		                                this.handlePlaceSelect); 
-	}
-	handlePlaceSelect () {
-		console.log("selected")
+	// 	  // Initialize Google Autocomplete 
+	// 	  /*global google*/
+	// 	  this.autocomplete = new google.maps.places.Autocomplete(
+	// 	                        document.getElementById('location'),
+	// 	                        options );
+	// 	  // Avoid paying for data that you don't need by restricting the 
+	// 	  // set of place fields that are returned to just the address
+	// 	  // components and formatted address
+	// 	  this.autocomplete.setFields(['address_components',   
+	// 	                               'formatted_address']);
+	// 	  // Fire Event when a suggested name is selected
+	// 	  this.autocomplete.addListener('place_changed',
+	// 	                                this.handlePlaceSelect); 
+	// }
+	// handlePlaceSelect () {
+	// 	console.log("selected")
 
-    // Extract City From Address Object
-    const addressObject = this.autocomplete.getPlace();
-    console.log("got place")
-    console.log(addressObject)
-    const address = addressObject.address_components;
+ //    // Extract City From Address Object
+ //    const addressObject = this.autocomplete.getPlace();
+ //    console.log("got place")
+ //    console.log(addressObject)
+ //    const address = addressObject.address_components;
 
-    // Check if address is valid
-    if (address) {
-      // Set State
-      console.log({
-          city: address[0].long_name,
-          query: addressObject.formatted_address,
-        }
-      );
-    }
-  }
-
+ //    // Check if address is valid
+ //    if (address) {
+ //      // Set State
+ //      console.log({
+ //          city: address[0].long_name,
+ //          query: addressObject.formatted_address,
+ //        }
+ //      );
+ //    }
+ //  }
+// <Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&libraries=places"       
+    //   onLoad={this.handleScriptLoad}        
+    // />        
 	render() {
 		console.log(this.state)
 		const { errors } = this.state
@@ -108,10 +137,7 @@ class CreateEvent extends React.Component {
 		console.log(this.props.auth)
 		return(
 			<div>
-			<Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&libraries=places"       
-      onLoad={this.handleScriptLoad}        
-    />        
-		<form noValidate onSubmit={this.onSubmit}>
+			
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
@@ -143,21 +169,22 @@ class CreateEvent extends React.Component {
                 <span className="red-text">{errors.activity}</span>
               </div>
               <div className="input-field col s12">
-                <input
-                  value={this.state.activity}
-                  error={errors.activity}
-                  id="location"
-                  type="text" className={classnames("", {
-                    invalid: errors.activity
-                  })}
-                />
+                <Autocomplete id="location"
+    onPlaceSelected={(place) => {
+      this.location = place
+      this.location.name = document.getElementById("location").value.split(",")[0]
+      console.log(this.location)
+    }}
+    types={[]}
+    componentRestrictions={{country: "us"}}
+/>
                 <label htmlFor="email">Location name</label>
                 <span className="red-text">{errors.activity}</span>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  id="date"
+                  id="eventDate"
                   type="datetime-local" className={classnames("", {
                     invalid: errors.activity
                   })}
@@ -169,20 +196,12 @@ class CreateEvent extends React.Component {
               
           
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
+                
+              </div>
+              <button onClick={this.onSubmit}>
                   Create Event
                 </button>
-              </div>
-            </form>
+
             </div>
             )
 			
