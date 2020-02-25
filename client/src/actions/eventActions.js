@@ -8,11 +8,15 @@ import {
 } from "./types";
 
 export const createEvent = eventData => dispatch => {
+
   console.log("creating event...")
   console.log(eventData)
   return new Promise(function(resolve, reject){
   axios
-    .post("http://localhost:5000/api/events/create", eventData)
+    .post("http://localhost:5000/api/events/create", eventData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }})
     .then(res => {
       console.log(res)
       resolve(res)

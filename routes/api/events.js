@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const fs = require('fs')
 const neatCsv = require('neat-csv');
-// Load input validation
+var imgPath = './bigseniors.jpeg';// Load input validation
 const validateEventInput = require("../../validation/event");
 // Load User model
 const Event = require("../../models/Event");
@@ -43,7 +43,8 @@ const { errors, isValid } = validateEventInput(req.body);
 //     if (user) {
 //       return res.status(400).json({ email: "Email already exists" });
 //     } else {
-      
+      console.log("image:")
+      console.log(req.img)
       const newEvent = new Event({
         name: req.body.name,
         owner: req.body.owner,
@@ -51,7 +52,8 @@ const { errors, isValid } = validateEventInput(req.body);
         eventDate: req.body.eventDate,
         description: req.body.description,
         location: req.body.location,
-        queryLoc: {type: "Point", coordinates: req.body.location.coordinates}
+        queryLoc: {type: "Point", coordinates: req.body.location.coordinates},
+        img: req.body.img
       });
       // name: this.state.name,
       //     description: this.state.description,
@@ -107,23 +109,29 @@ router.post("/getEvents", (req, res) => {
 })
 
 router.post("/test", (req, res) => {
-  milesDistance = 20
-  Event.find({
-  queryLoc: {
-   $near: {
-    $maxDistance: 1609*milesDistance,
-    $geometry: {
-     type: "Point",
-     coordinates: [-73.9007, 40.8997]
-    }
-   }
-  }
- }).find((error, results) => {
-  console.log(results);
-  res.json(results)
-  if (error) console.log(error);
- });
+  const e = new Event({
+    img: {data: fs.readFileSync(imgPath)}
+  })
+  console.log(e)
+  e.save().then(event => res.json(event)).catch(error => res.json(error))
 })
+
+ //  milesDistance = 20
+ //  Event.find({
+ //  queryLoc: {
+ //   $near: {
+ //    $maxDistance: 1609*milesDistance,
+ //    $geometry: {
+ //     type: "Point",
+ //     coordinates: [-73.9007, 40.8997]
+ //    }
+ //   }
+ //  }
+ // }).find((error, results) => {
+ //  console.log(results);
+ //  res.json(results)
+ //  if (error) console.log(error);
+ // });
 
 
 module.exports = router
