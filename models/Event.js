@@ -31,16 +31,14 @@ const pointSchema = new mongoose.Schema({
 
 
 const EventSchema = new Schema({
+  img: 
+      { data: Buffer, contentType: String },
   name: String,
   owner: mongoose.Schema.Types.ObjectId,
   location: pointSchema,
   description: String,
   eventDate: String,
   createdDate: Date,
-  image: {
-    url: String,
-    altText: String
-  },
   attendees: [mongoose.Schema.Types.ObjectId],
   queryLoc: {
    type: { type: String },

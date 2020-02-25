@@ -20,7 +20,8 @@ class CreateEvent extends React.Component {
 	      description: "",
 	      location: {},
 	      eventDate: "",
-	      errors: {}
+	      errors: {},
+        img: null
 	    };
       this.location = {}
       // this.autocomplete = null
@@ -43,13 +44,18 @@ class CreateEvent extends React.Component {
 	  }
 	  onChange = e => { //update state on input change
       e.preventDefault()
-	  	if(e != "location"){
+      if(e.target.id == "img"){
+        this.setState({"img": e.target.files[0]})
+      }
+	  	else if(e != "location"){
 	      this.setState({ [e.target.id]: e.target.value });
 	  	}
       console.log(this.state)
 	    };
 
 	  onSubmit = e => {//user wants to create new event
+      const data = new FormData()
+      data.append('img', this.state.img)
       var comps = this.location.address_components
       for (var i = 0; i < comps.length; i++){
         var val = comps[i]
@@ -80,12 +86,17 @@ class CreateEvent extends React.Component {
 	        location: loc,
 	        eventDate: this.state.eventDate,
 	        createdDate: Date.now(),
-	        owner: this.props.auth.user.id
+	        owner: this.props.auth.user.id,
+          img: this.state.img
 
 	      };
-        console.log(newEvent)
+        data.append("body", newEvent)
+        // console.log(newEvent)
+        // data.append("body", newEvent)
+        // console.log(data)
+        // console.log(newEvent)
 	  //SEND REQUEST to be handled within eventActions.js
-	  this.props.createEvent(newEvent).then(res => {
+	  this.props.createEvent(data).then(res => {
       console.log(res)
     })
 	    };
@@ -132,9 +143,9 @@ class CreateEvent extends React.Component {
 	render() {
 		console.log(this.state)
 		const { errors } = this.state
-		console.log("errors:")
-		console.log(errors)
-		console.log(this.props.auth)
+		// console.log("errors:")
+		// console.log(errors)
+		// console.log(this.props.auth)
 		return(
 			<div>
 			
@@ -192,6 +203,13 @@ class CreateEvent extends React.Component {
                 <label htmlFor="email">Event date</label>
                 <span className="red-text">{errors.activity}</span>
               </div>
+              <div className="input-field col s12">
+              <input onChange={this.onChange} id="img" type="file"/>
+
+
+
+              </div>
+
 
               
           
