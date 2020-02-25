@@ -12,6 +12,7 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import { connect } from "react-redux";
 import { getEvent } from "../../actions/eventActions";
 
+/*
 const event = {
   id: 1,
   title: 'Bowling in Brooklyn', 
@@ -29,7 +30,7 @@ const event = {
   imageAltText: 'Bowling',
   attendees: [1,2,3]
 };
-
+*/
 const attendees = [
   {id: 1, name: 'Tonya P.'},
   {id: 2, name: 'Tony W.'},
@@ -41,52 +42,29 @@ const attendees = [
 class EventInfo extends React.Component {
 
   render() {
-    console.log(this.props)
-    /*
-    const title = this.props.title;
-    const desc = this.props.desc;
-    const imageURL = this.props.imageURL;
-    const imageAltText = this.props.imageAltText;
-    const address = this.props.address;
-    const date = this.props.date;
-    const time = this.props.time;
-    */
+    const e = this.props.e;
+    console.log(e.name); 
 
     return (
       <Container> 
         <Row> 
           <Col align="center">
-            <h1>{event.title}</h1>
+            <h1>{e.name}</h1>
           </Col>
         </Row>
         <Row>
           <Col align="center">
-            <img  src={process.env.PUBLIC_URL + "/" + event.imageURL} id = "mainpic" alt={event.imageAltText} />
+            <img  src={process.env.PUBLIC_URL + "/" + e.eventimageURL} id = "mainpic" alt={e.imageAltText} />
           </Col>
         </Row>
         <Row>
           <Col align="center"> 
-            <h4>{event.description}</h4>
-            <h4>Where: {event.location.address}</h4>
-            <h4>When: {event.date} at {event.time}</h4>
+            <h4>{e.description}</h4>
+            <h4>{e.location.address}</h4>
+            <h4>{e.date} at {e.time}</h4>
           </Col>
-        </Row>
-
-        <Row>
-          <Col align="center"> 
-            <Button variant="flat" size="xxl">
-              Sign up!
-            </Button>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col> 
-            &nbsp;           
-          </Col>
-        </Row>
-      </Container>  
-      
+        </Row> 
+      </Container>        
     )
   }
 }
@@ -151,20 +129,10 @@ class EventAttendees extends React.Component {
 
 class EventMap extends React.Component {
   render() {
-    const address = event.address; // map should be dynamic based on this address
+    //const myevent = this.props.myevent; // map should be dynamic based on this address
     
     return (
       <Container>
-       <Row>
-        <Col align="center">
-          <h1>&nbsp;</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col align="center">
-          <h1>How do I get there?</h1>
-        </Col>
-      </Row>
       <Row>
         <Col align="center">
            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.437469438017!2d-74.00168994903454!3d40.6863619792331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a5b7205d579%3A0xba781618256b732b!2s22%20Cheever%20Pl%2C%20Brooklyn%2C%20NY%2011231!5e0!3m2!1sen!2sus!4v1578168425495!5m2!1sen!2sus" frameborder="0"  allowfullscreen=""></iframe>
@@ -189,13 +157,37 @@ class EventDetail extends React.Component {
      super(props);
      this.id = props.match.params.id;
      console.log("id is " + this.id);
-     // USE ID 5e308a9359ad05baaa91d614
+     this.state = {
+        e: { empty: true,
+          location: {
+            address: ""
+          },
+          date:""
+        }
+      }
+     // USE ID "5e3af2a6db2d474bee3e535a"
+   }
+   componentDidMount(){
+    var myevent;
+    this.props.getEvent({id: this.id}).then(myevent => {
+        console.log("getevent");
+        //var date = myevent.data.event.eventDate.split('T').shift().split('-').reverse();
+        //var temp = date[0]; // reverse to mm/dd
+        //date[0] = date[1];
+        //date[1] = temp;                     
+        //date = date.join('/');  // join with "/"      -> "09/11/2015"
+        var date = formatDate(myevent);
+        var time = formatTime(myevent);
+        myevent.data.event.time = time;                      
+        myevent.data.event.date = date;
+        myevent.data.event.empty = false;
+        this.setState({e: myevent.data.event});
+      })
    }
    render() {
-    this.props.getEvent({id: this.id}).then(event => {
-        console.log(event)
-        // event: {attendees: Array(0), _id: "5e308a9359ad05baaa91d614", name: "NAME",
-    })
+    
+      
+    if(!this.state.e.empty){
     return (  
       <div id = "grad">
       <div id="bg-image"></div>
@@ -217,20 +209,17 @@ class EventDetail extends React.Component {
         <Row>
           
           <Col>
-             <EventInfo id={this.id} />
+             <EventInfo e={this.state.e} />
           </Col>
 
            <Col>
-              <EventMap address={event.location.address} />
+              <EventMap  />
           </Col>
           
          </Row>
          <Row> 
           
-          <Col>
-              <EventAttendees attendees={attendees} />
-              <br />
-          </Col>
+         
          
          </Row>
             
@@ -238,6 +227,7 @@ class EventDetail extends React.Component {
       </div>
 
     ); 
+  }else{return(<h1> loading... </h1>)}
   }
 }    
 
@@ -251,7 +241,55 @@ export default connect(
   { getEvent }
 )(EventDetail);
 
+function formatDate(e) { 
+  var date = e.data.event.eventDate.split('T').shift().split('-').reverse();
+    var temp = date[0]; // reverse to mm/dd
+    date[0] = date[1];
+    date[1] = temp;                     
+    date = date.join('/');  // join with "/"      -> "09/11/2015"
+    return(date);
+}
 
+function formatTime(e) { 
+  var time = e.data.event.eventDate.split('T').pop().split(':'); // split on the "T"   -> ["2015-11-09", "10:..."]
+    if (time[0] > 12) {
+        time[0] = time[0] - 12;
+        time = time.join(':') + " PM";
+    }
+    else {
+        time = time.join(':') + " AM";
+    }
+    return(time);
+}/*
+        <Row>
+          <Col align="center"> 
+            <Button variant="flat" size="xxl">
+              Sign up!
+            </Button>
+          </Col>
+        </Row>
+            
+
+
+
+      <Row>
+        <Col align="center">
+          <h1>&nbsp;</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col align="center">
+          <h1>How do I get there?</h1>
+        </Col>
+      </Row>
+      <Row>
+
+
+          <Col>
+              <EventAttendees attendees={attendees} />
+              <br />
+          </Col>
+      */
 
 
 
