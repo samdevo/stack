@@ -11,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import { connect } from "react-redux";
 import { getEvent } from "../../actions/eventActions";
-
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 /*
 const event = {
   id: 1,
@@ -70,78 +70,37 @@ class EventInfo extends React.Component {
 }
 
 
-class EventAttendees extends React.Component {
-  render() {
-    const attendees = this.props.attendees;
-
-    return (
-      <Container>
-      <Row>
-        <Col align="center">
-          <h1>Who's Coming?</h1>
-        </Col>
-      </Row>  
-            
-      <Row>  
-        <Col></Col>
-        <Col xs={9}>
-          <CardGroup>
-          <Card style={{ width: '5rem' }}> 
-            <Card.Body>
-              <Card.Title>{attendees[0].name}</Card.Title>
-            </Card.Body>
-          </Card>
-        <Card style={{ width: '5rem' }}>
-           <Card.Body>
-              <Card.Title>{attendees[1].name}</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '5rem' }}>
-            <Card.Body>
-              <Card.Title>{attendees[2].name}</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '5rem' }}>
-            <Card.Body>
-              <Card.Title><a href="">+ {attendees.length -3} more</a></Card.Title>
-            </Card.Body>
-          </Card>
-          </CardGroup>
-        </Col> 
-        <Col></Col> 
-      </Row> 
-
-      <Row>
-        <Col align="center">
-          <p>
-          <br />
-          <Button variant="flat" size="xxl">
-            Invite Friends
-          </Button>
-          </p>
-        </Col>
-      </Row>    
-      </Container>
-    );
-  }
-}
-
+// npm install --save react-google-maps
 
 class EventMap extends React.Component {
   render() {
-    //const myevent = this.props.myevent; // map should be dynamic based on this address
-    
+    const e = this.props.e; 
+    const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+      <GoogleMap defaultZoom={12} defaultCenter={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} >
+        {props.isMarkerShown && <Marker position={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} />}
+      </GoogleMap>
+    )) 
     return (
       <Container>
       <Row>
         <Col align="center">
-           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.437469438017!2d-74.00168994903454!3d40.6863619792331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a5b7205d579%3A0xba781618256b732b!2s22%20Cheever%20Pl%2C%20Brooklyn%2C%20NY%2011231!5e0!3m2!1sen!2sus!4v1578168425495!5m2!1sen!2sus" frameborder="0"  allowfullscreen=""></iframe>
+          <MyMapComponent
+            isMarkerShown 
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          /> 
+
+           
+            
+  
         </Col>
       </Row>
       <Row>
         <Col align="center">
           <br />
-            <Button variant="flat" size="xxl">
+            <Button variant = "flat"  size="xxl" href = {'/helpMeGetThere/' + e._id} > 
             Help me get there
           </Button>
         </Col>
@@ -165,7 +124,6 @@ class EventDetail extends React.Component {
           date:""
         }
       }
-     // USE ID "5e3af2a6db2d474bee3e535a"
    }
    componentDidMount(){
     var myevent;
@@ -213,7 +171,7 @@ class EventDetail extends React.Component {
           </Col>
 
            <Col>
-              <EventMap  />
+              <EventMap e={this.state.e}  />
           </Col>
           
          </Row>
