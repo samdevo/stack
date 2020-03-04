@@ -76,7 +76,7 @@ class EventMap extends React.Component {
   render() {
     const e = this.props.e; 
     const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-      <GoogleMap defaultZoom={12} defaultCenter={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} >
+      <GoogleMap defaultZoom={16} defaultCenter={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} >
         {props.isMarkerShown && <Marker position={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} />}
       </GoogleMap>
     )) 
@@ -90,11 +90,7 @@ class EventMap extends React.Component {
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
-          /> 
-
-           
-            
-  
+          />
         </Col>
       </Row>
       <Row>
@@ -110,6 +106,62 @@ class EventMap extends React.Component {
   }
 }
 
+class EmailForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {value: 'Enter your email...'};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    if (this.state.value != 'Enter your email...') {
+      console.log(this.state.value);
+      var flag = ValidateEmail(this.state.value);
+      if (!flag) {
+        alert("Please check your email address");
+      }
+      else {
+        // call addAttendee
+        //this.props.addAttendee({id: this.id}).then(myevent => {
+        //console.log("addattendee");
+      }
+    }
+    else {
+      alert("Please enter your email address");
+    }
+    event.preventDefault();
+  }
+
+  render() {
+    const e = this.props.e; 
+    return (  
+      <Container>
+      <Row>
+        <Col align="center">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <input type="text" name="email" value={this.state.value} onChange={this.handleChange} />
+              <input type="hidden" name="eventId" value={e._id} />
+            </label>
+            <br />
+            <Button type="submit" variant = "flat"  size="xxl" > 
+              Remind me...
+            </Button>
+          </form>
+        </Col>
+      </Row>
+      </Container>
+    );
+  }
+}
 
 class EventDetail extends React.Component {
   constructor(props) {
@@ -172,6 +224,7 @@ class EventDetail extends React.Component {
 
            <Col>
               <EventMap e={this.state.e}  />
+              <EmailForm e={this.state.e}  />
           </Col>
           
          </Row>
@@ -218,7 +271,15 @@ function formatTime(e) {
         time = time.join(':') + " AM";
     }
     return(time);
-}/*
+}
+
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    return (true);   
+  }
+  return (false);
+}
+/*
         <Row>
           <Col align="center"> 
             <Button variant="flat" size="xxl">
