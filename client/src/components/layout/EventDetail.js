@@ -31,13 +31,6 @@ const event = {
   attendees: [1,2,3]
 };
 */
-const attendees = [
-  {id: 1, name: 'Tonya P.'},
-  {id: 2, name: 'Tony W.'},
-  {id: 3, name: 'Tino R.'},
-  {id: 4, name: 'Kira W.'},
-  {id: 5, name: 'Leo R.'}
-];
 
 class EventInfo extends React.Component {
 
@@ -110,8 +103,8 @@ class EmailForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: 'Enter your email...'};
-
+    //this.state = {value: 'Enter your email...'};
+    this.state = {value: '', message: 'Enter your email', messageColor: '#000000'};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -122,20 +115,18 @@ class EmailForm extends React.Component {
   }
 
   handleSubmit(event) {
-    if (this.state.value != 'Enter your email...') {
-      console.log(this.state.value);
-      var flag = ValidateEmail(this.state.value);
-      if (!flag) {
-        alert("Please check your email address");
-      }
-      else {
-        // call addAttendee
-        //this.props.addAttendee({id: this.id}).then(myevent => {
-        //console.log("addattendee");
-      }
+    console.log(this.state.value);
+    var flag = ValidateEmail(this.state.value);
+    if (!flag) {
+      this.setState({messageColor: "red"});
+      this.setState({message: "Please check your email address"});
     }
     else {
-      alert("Please enter your email address");
+      // call addAttendee
+      //this.props.addAttendee({id: this.id}).then(myevent => {
+      //console.log("addattendee");
+      this.setState({messageColor: "green"});
+      this.setState({message: "Thanks! We'll send a reminder."});
     }
     event.preventDefault();
   }
@@ -147,6 +138,7 @@ class EmailForm extends React.Component {
       <Row>
         <Col align="center">
           <form onSubmit={this.handleSubmit}>
+            <div id="message" style={{color: this.state.messageColor}}>{this.state.message}</div>
             <label>
               <input type="text" name="email" value={this.state.value} onChange={this.handleChange} />
               <input type="hidden" name="eventId" value={e._id} />
