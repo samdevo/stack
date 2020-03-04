@@ -39,7 +39,7 @@ const EventSchema = new Schema({
   description: String,
   eventDate: String,
   createdDate: Date,
-  attendees: [mongoose.Schema.Types.ObjectId],
+  attendees: [String],
   queryLoc: {
    type: { type: String },
    coordinates: []

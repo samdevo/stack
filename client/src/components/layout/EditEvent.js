@@ -40,28 +40,40 @@ const attendees = [
 ];
 
 class EventInfo extends React.Component {
-
-
+  constructor(props) {
+     super(props);
+     this.state = {}
+     // USE ID "5e3af2a6db2d474bee3e535a"
+   }
+onChange = e => { //update state on input change
+      e.preventDefault()
+      if(e != "location"){
+        this.props.change({[e.target.id]: e.target.value });
+      }
+      };
+      saveChanges(){
+        console.log(this.state)
+      }
   render() {
     const e = this.props.e;
     console.log(e.name); 
-    console.log(this.props.e.img)
+    console.log(this.props)
 
     return (
       <Container> 
         <Row> 
           <Col align="center">
-            <h1>{e.name}</h1>
+            <h1><input type="text" onChange={this.onChange} id="name" value={e.name}/> </h1>
           </Col>
         </Row>
         <Row>
           <Col align="center">
-            <img  src={e.img} id = "mainpic" alt={e.imageAltText} />
+            <img  src={process.env.PUBLIC_URL + "/" + e.eventimageURL} id = "mainpic" alt={e.imageAltText} />
           </Col>
         </Row>
         <Row>
           <Col align="center"> 
-            <h4>{e.description}</h4>
+            <h4><input onChange={this.onChange} type="text" id="description" value={e.description}/></h4>
             <h4>{e.location.address}</h4>
             <h4>{e.date} at {e.time}</h4>
           </Col>
@@ -154,7 +166,7 @@ class EventMap extends React.Component {
 }
 
 
-class EventDetail extends React.Component {
+class EditEvent extends React.Component {
   constructor(props) {
      super(props);
      this.id = props.match.params.id;
@@ -165,18 +177,11 @@ class EventDetail extends React.Component {
             address: ""
           },
           date:""
-        }
+        },
+        changed: {}
       }
      // USE ID "5e3af2a6db2d474bee3e535a"
    }
-   arrayBufferToBase64(buffer) {
-    return new Promise(function(resolve, reject){
-    var binary = '';
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => binary += String.fromCharCode(b));
-     resolve(window.btoa(binary));
-   })
-  };
    componentDidMount(){
     var myevent;
     this.props.getEvent({id: this.id}).then(myevent => {
@@ -191,15 +196,22 @@ class EventDetail extends React.Component {
         myevent.data.event.time = time;                      
         myevent.data.event.date = date;
         myevent.data.event.empty = false;
-        this.arrayBufferToBase64(myevent.data.event.img.data.data).then((bin) => {
-          myevent.data.event.img = 'data:image/jpeg;base64,' + bin
-          this.setState({e: myevent.data.event})
-      })
+        this.setState({e: myevent.data.event});
       })
    }
+   onChange = e => { //update state on input change
+      e.preventDefault()
+      if(e != "location"){
+        this.setState({[e.target.id]: e.target.value });
+      }
+      };
+      saveChanges(){
+        console.log(this.state)
+      }
+
    render() {
     
-      
+      console.log(this.state)
     if(!this.state.e.empty){
     return (  
       <div id = "grad">
@@ -222,7 +234,7 @@ class EventDetail extends React.Component {
         <Row>
           
           <Col>
-             <EventInfo e={this.state.e} />
+             <EventInfo change={this.onchange} e={this.state.e} />
           </Col>
 
            <Col>
@@ -231,7 +243,7 @@ class EventDetail extends React.Component {
           
          </Row>
          <Row> 
-          
+          <button value="Save Changes"/>
          
          
          </Row>
@@ -252,7 +264,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getEvent }
-)(EventDetail);
+)(EditEvent);
 
 function formatDate(e) { 
   var date = e.data.event.eventDate.split('T').shift().split('-').reverse();
@@ -273,39 +285,7 @@ function formatTime(e) {
         time = time.join(':') + " AM";
     }
     return(time);
-}/*
-        <Row>
-          <Col align="center"> 
-            <Button variant="flat" size="xxl">
-              Sign up!
-            </Button>
-          </Col>
-        </Row>
-            
-
-
-
-      <Row>
-        <Col align="center">
-          <h1>&nbsp;</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col align="center">
-          <h1>How do I get there?</h1>
-        </Col>
-      </Row>
-      <Row>
-
-
-          <Col>
-              <EventAttendees attendees={attendees} />
-              <br />
-          </Col>
-      */
-
-
-
+}
 
 
 

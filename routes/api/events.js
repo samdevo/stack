@@ -43,8 +43,8 @@ const { errors, isValid } = validateEventInput(req.body);
 //     if (user) {
 //       return res.status(400).json({ email: "Email already exists" });
 //     } else {
-      console.log("image:")
-      console.log(req.img)
+      // console.log("image:")
+      // console.log(req.body.name)
       const newEvent = new Event({
         name: req.body.name,
         owner: req.body.owner,
@@ -53,7 +53,7 @@ const { errors, isValid } = validateEventInput(req.body);
         description: req.body.description,
         location: req.body.location,
         queryLoc: {type: "Point", coordinates: req.body.location.coordinates},
-        img: req.body.img
+        // img: req.body.img
       });
       // name: this.state.name,
       //     description: this.state.description,
@@ -109,11 +109,18 @@ router.post("/getEvents", (req, res) => {
 })
 
 router.post("/test", (req, res) => {
-  const e = new Event({
-    img: {data: fs.readFileSync(imgPath)}
-  })
-  console.log(e)
-  e.save().then(event => res.json(event)).catch(error => res.json(error))
+  Event.update({_id: "5e5fd727253ae033ca19780b"}, {$set: {img: {data: fs.readFileSync(imgPath)}}}).then(res=> res.json(res)).catch(error => res.json(error))
+  // const e = new Event({
+  //   img: {data: fs.readFileSync(imgPath)}
+  // })
+  // console.log(e)
+  // e.save().then(event => res.json(event)).catch(error => res.json(error))
+})
+router.post("/updateInfo", (req, res) => {
+
+})
+router.post("/updateImg", (req, res) => {
+  
 })
 
  //  milesDistance = 20

@@ -77,7 +77,14 @@ class CreateEvent extends React.Component {
 
 
       }
-      console.log(loc)
+      // var reader = new FileReader()
+      // reader.onload = function(event){
+      //   console.log(reader.readAsText(this.state.img))
+      // }
+      // reader.readAsDataURL(this.state.img)
+      // console.log(this.state.img.type)
+      // // var encodedImage = this.state.img.getAsBinary()
+      // console.log(encodedImage)
 	  	// var date = document.getElementById("date").value
 	      // e.preventDefault();
 	  const newEvent = {
@@ -87,16 +94,10 @@ class CreateEvent extends React.Component {
 	        eventDate: this.state.eventDate,
 	        createdDate: Date.now(),
 	        owner: this.props.auth.user.id,
-          img: this.state.img
+          // img: this.state.img
 
 	      };
-        data.append("body", newEvent)
-        // console.log(newEvent)
-        // data.append("body", newEvent)
-        // console.log(data)
-        // console.log(newEvent)
-	  //SEND REQUEST to be handled within eventActions.js
-	  this.props.createEvent(data).then(res => {
+	  this.props.createEvent(newEvent).then(res => {
       console.log(res)
     })
 	    };

@@ -13,10 +13,7 @@ export const createEvent = eventData => dispatch => {
   console.log(eventData)
   return new Promise(function(resolve, reject){
   axios
-    .post("http://localhost:5000/api/events/create", eventData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }})
+    .post("http://localhost:5000/api/events/create", eventData)
     .then(res => {
       console.log(res)
       resolve(res)
