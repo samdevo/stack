@@ -11,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import { connect } from "react-redux";
 import { getEvent } from "../../actions/eventActions";
-
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 /*
 const event = {
   id: 1,
@@ -31,13 +31,6 @@ const event = {
   attendees: [1,2,3]
 };
 */
-const attendees = [
-  {id: 1, name: 'Tonya P.'},
-  {id: 2, name: 'Tony W.'},
-  {id: 3, name: 'Tino R.'},
-  {id: 4, name: 'Kira W.'},
-  {id: 5, name: 'Leo R.'}
-];
 
 class EventInfo extends React.Component {
 
@@ -72,78 +65,33 @@ class EventInfo extends React.Component {
 }
 
 
-class EventAttendees extends React.Component {
-  render() {
-    const attendees = this.props.attendees;
-
-    return (
-      <Container>
-      <Row>
-        <Col align="center">
-          <h1>Who's Coming?</h1>
-        </Col>
-      </Row>  
-            
-      <Row>  
-        <Col></Col>
-        <Col xs={9}>
-          <CardGroup>
-          <Card style={{ width: '5rem' }}> 
-            <Card.Body>
-              <Card.Title>{attendees[0].name}</Card.Title>
-            </Card.Body>
-          </Card>
-        <Card style={{ width: '5rem' }}>
-           <Card.Body>
-              <Card.Title>{attendees[1].name}</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '5rem' }}>
-            <Card.Body>
-              <Card.Title>{attendees[2].name}</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '5rem' }}>
-            <Card.Body>
-              <Card.Title><a href="">+ {attendees.length -3} more</a></Card.Title>
-            </Card.Body>
-          </Card>
-          </CardGroup>
-        </Col> 
-        <Col></Col> 
-      </Row> 
-
-      <Row>
-        <Col align="center">
-          <p>
-          <br />
-          <Button variant="flat" size="xxl">
-            Invite Friends
-          </Button>
-          </p>
-        </Col>
-      </Row>    
-      </Container>
-    );
-  }
-}
-
+// npm install --save react-google-maps
 
 class EventMap extends React.Component {
   render() {
-    //const myevent = this.props.myevent; // map should be dynamic based on this address
-    
+    const e = this.props.e; 
+    const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+      <GoogleMap defaultZoom={16} defaultCenter={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} >
+        {props.isMarkerShown && <Marker position={{ lat: e.location.coordinates[1], lng: e.location.coordinates[0] }} />}
+      </GoogleMap>
+    )) 
     return (
       <Container>
       <Row>
         <Col align="center">
-           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.437469438017!2d-74.00168994903454!3d40.6863619792331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a5b7205d579%3A0xba781618256b732b!2s22%20Cheever%20Pl%2C%20Brooklyn%2C%20NY%2011231!5e0!3m2!1sen!2sus!4v1578168425495!5m2!1sen!2sus" frameborder="0"  allowfullscreen=""></iframe>
+          <MyMapComponent
+            isMarkerShown 
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y5qgyLmYzkkFlRTKdnbrYJ0xZskUw54&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          />
         </Col>
       </Row>
       <Row>
         <Col align="center">
           <br />
-            <Button variant="flat" size="xxl">
+            <Button variant = "flat"  size="xxl" href = {'/helpMeGetThere/' + e._id} > 
             Help me get there
           </Button>
         </Col>
@@ -153,6 +101,61 @@ class EventMap extends React.Component {
   }
 }
 
+class EmailForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    //this.state = {value: 'Enter your email...'};
+    this.state = {value: '', message: 'Enter your email', messageColor: '#000000'};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    console.log(this.state.value);
+    var flag = ValidateEmail(this.state.value);
+    if (!flag) {
+      this.setState({messageColor: "red"});
+      this.setState({message: "Please check your email address"});
+    }
+    else {
+      // call addAttendee
+      //this.props.addAttendee({id: this.id}).then(myevent => {
+      //console.log("addattendee");
+      this.setState({messageColor: "green"});
+      this.setState({message: "Thanks! We'll send a reminder."});
+    }
+    event.preventDefault();
+  }
+
+  render() {
+    const e = this.props.e; 
+    return (  
+      <Container>
+      <Row>
+        <Col align="center">
+          <form onSubmit={this.handleSubmit}>
+            <div id="message" style={{color: this.state.messageColor}}>{this.state.message}</div>
+            <label>
+              <input type="text" name="email" value={this.state.value} onChange={this.handleChange} />
+              <input type="hidden" name="eventId" value={e._id} />
+            </label>
+            <br />
+            <Button type="submit" variant = "flat"  size="xxl" > 
+              Remind me...
+            </Button>
+          </form>
+        </Col>
+      </Row>
+      </Container>
+    );
+  }
+}
 
 class EventDetail extends React.Component {
   constructor(props) {
@@ -167,7 +170,6 @@ class EventDetail extends React.Component {
           date:""
         }
       }
-     // USE ID "5e3af2a6db2d474bee3e535a"
    }
    arrayBufferToBase64(buffer) {
     return new Promise(function(resolve, reject){
@@ -226,7 +228,8 @@ class EventDetail extends React.Component {
           </Col>
 
            <Col>
-              <EventMap  />
+              <EventMap e={this.state.e}  />
+              <EmailForm e={this.state.e}  />
           </Col>
           
          </Row>
@@ -273,7 +276,15 @@ function formatTime(e) {
         time = time.join(':') + " AM";
     }
     return(time);
-}/*
+}
+
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    return (true);   
+  }
+  return (false);
+}
+/*
         <Row>
           <Col align="center"> 
             <Button variant="flat" size="xxl">

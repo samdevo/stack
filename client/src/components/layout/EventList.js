@@ -11,6 +11,7 @@ import { createEvent, getEvents } from "../../actions/eventActions";
 import ReactDOM from 'react-dom';
 import Geocode from 'react-geocode'
 
+/*
 const Events = [
   {id: "5e436388bbb8dc687df43ca3",
   title: 'Bowling in Brooklyn', 
@@ -31,7 +32,7 @@ const Events = [
   imageAltText: "older adults",
   atendees: [1,4,5]},
 ];
-
+*/
 
 class EventList extends React.Component {
 	
@@ -68,12 +69,11 @@ class EventList extends React.Component {
 					<Card.Title>
 						{event.name}
 			 		</Card.Title>
-			 		<Card.Subtitle>
-						{ formatDate(event.eventDate) } at { formatTime(event.eventDate) }
-	 				</Card.Subtitle>
-		 			<Card.Body>
+			 		<Card.Body>
 						<Card.Text>
-			 				{event.description}
+			 				{ formatDate(event.eventDate) }, { formatTime(event.eventDate) } 
+			 				at { event.location.address}<br />
+			 				{ event.description }
 		 				</Card.Text>
 		 				<Button variant = "primary" href = {'/detail/' + event._id} >
 							More Info
