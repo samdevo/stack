@@ -24,7 +24,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "sass": "^1.23.7",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "typescript": "^3.7.3"
   },
   "scripts": {
